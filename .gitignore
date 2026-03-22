@@ -1,0 +1,26 @@
+# Unreal Engine / UEFN
+Binaries/
+Build/
+DerivedDataCache/
+Intermediate/
+Saved/
+*.VC.db
+*.opendb
+*.uasset
+*.umap
+*.uplugin
+*.uproject.bak
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.user
+
+# Logs
+*.log
