@@ -1,47 +1,82 @@
 using { /Fortnite.com/Devices }
 using { /Fortnite.com/Characters }
+using { /Fortnite.com/Game }
 using { /Verse.org/Simulation }
 using { /UnrealEngine.com/Temporary/Diagnostics }
 
-# GameManager — Controla l'estat global de la partida ASCENT
-# S'encarrega d'iniciar el joc, gestionar zones i detectar victòria
+# GameManager
+# Orquestra tots els sistemes de la partida ASCENT.
+# Estats: Waiting → Playing → Finished
+# Gestiona inici, victòria i comprovació de proximitat de l'aigua.
 
 game_manager := class(creative_device):
 
-    # Referència al controlador d'aigua
-    @editable WaterController : water_controller = water_controller{}
+    # --- Referències als altres sistemes (assignar al UEFN editor) ---
+    @editable Water : water_controller = water_controller{}
+    @editable Checkpoints : checkpoint_tracker = checkpoint_tracker{}
+    @editable Timer : timer_display = timer_display{}
+    @editable Leaderboard : leaderboard_manager = leaderboard_manager{}
 
-    # Referència al tracker de checkpoints
-    @editable CheckpointTracker : checkpoint_tracker = checkpoint_tracker{}
+    # Trigger col·locat a la plataforma de victòria (Zona 5 — Cim)
+    @editable FinishTrigger : trigger_device = trigger_device{}
 
-    # Referència al display del timer
-    @editable TimerDisplay : timer_display = timer_display{}
+    # HUD de compte enrere abans d'iniciar (opcional)
+    @editable CountdownHUD : hud_message_device = hud_message_device{}
 
-    # Referència al leaderboard
-    @editable LeaderboardManager : leaderboard_manager = leaderboard_manager{}
+    # Interval en segons per comprovar proximitat de l'aigua
+    @editable ProximityCheckInterval : float = 2.0
 
-    # Dispositiu de la plataforma de victòria (zona 5, cim)
-    @editable FinishPlatform : trigger_device = trigger_device{}
+    # --- Estat intern ---
+    var GameState : int = 0  # 0=Waiting, 1=Playing, 2=Finished
 
-    # S'executa quan comença la partida
     OnBegin<override>()<suspends> : void =
-        Print("ASCENT — Partida iniciada")
+        Print("ASCENT — Esperant jugadors...")
+        set GameState = 0
 
-        # Iniciar el timer
-        TimerDisplay.StartTimer()
+        # Petit compte enrere abans d'iniciar
+        Sleep(3.0)
 
-        # Iniciar la pujada d'aigua
-        WaterController.StartWaterRise()
+        StartGame()
 
-        # Esperar que un jugador arribi al cim
-        FinishPlatform.TriggeredEvent.Await()
+        # Esperar victòria en paral·lel amb la comprovació de proximitat
+        race:
+            WaitForVictory()
+            ProximityCheckLoop()
 
-        # Aturar tot quan acaba
-        OnPlayerFinish()
+    # Inicia tots els sistemes alhora
+    StartGame() : void =
+        set GameState = 1
+        Print("ASCENT — Partida iniciada!")
+        Timer.StartTimer()
+        Water.StartWaterRise()
 
-    # Quan un jugador arriba al cim
-    OnPlayerFinish() : void =
-        Print("ASCENT — Jugador ha arribat al cim!")
-        TimerDisplay.StopTimer()
-        WaterController.StopWaterRise()
-        LeaderboardManager.SaveScore(TimerDisplay.GetElapsedTime())
+    # Espera que el jugador activi el trigger del cim
+    WaitForVictory()<suspends> : void =
+        let Payload := FinishTrigger.TriggeredEvent.Await()
+        if (Agent := Payload.Agent?):
+            if (FinishPlayer := player[Agent]):
+                OnPlayerFinish(FinishPlayer)
+
+    # Comprova cada N segons si l'aigua és massa a prop del jugador
+    ProximityCheckLoop()<suspends> : void =
+        loop:
+            if (GameState <> 1):
+                break
+            Sleep(ProximityCheckInterval)
+            # TODO: obtenir alçada del jugador via fort_character.GetTransform()
+            # i passar-la a Timer.CheckWaterProximity(PlayerHeight)
+
+    # Executat quan un jugador arriba al cim
+    OnPlayerFinish(Player : player) : void =
+        if (GameState = 1):
+            set GameState = 2
+            Print("ASCENT — Victòria!")
+
+            Timer.StopTimer()
+            Water.StopWaterRise()
+
+            let FinalTime : int = Timer.GetElapsedSeconds()
+            Leaderboard.SaveScore(FinalTime, Player)
+
+            Sleep(2.0)
+            Leaderboard.ShowLeaderboard()
