@@ -4,79 +4,83 @@ using { /Fortnite.com/Game }
 using { /Verse.org/Simulation }
 using { /UnrealEngine.com/Temporary/Diagnostics }
 
-# GameManager
-# Orquestra tots els sistemes de la partida ASCENT.
-# Estats: Waiting → Playing → Finished
-# Gestiona inici, victòria i comprovació de proximitat de l'aigua.
+# Orquestra tots els sistemes de ASCENT.
+# Estats: 0=Waiting, 1=Playing, 2=Finished
+# Suporta 1–4 jugadors (race mode: cadascú té el seu temps).
 
 game_manager := class(creative_device):
 
-    # --- Referències als altres sistemes (assignar al UEFN editor) ---
     @editable Water : water_controller = water_controller{}
     @editable Checkpoints : checkpoint_tracker = checkpoint_tracker{}
     @editable Timer : timer_display = timer_display{}
     @editable Leaderboard : leaderboard_manager = leaderboard_manager{}
 
-    # Trigger col·locat a la plataforma de victòria (Zona 5 — Cim)
+    # Trigger col·locat a la plataforma de victòria (Zona 5)
     @editable FinishTrigger : trigger_device = trigger_device{}
 
-    # HUD de compte enrere abans d'iniciar (opcional)
-    @editable CountdownHUD : hud_message_device = hud_message_device{}
+    # HUD visible durant l'espera, tapat quan comença la partida
+    @editable WaitingHUD : hud_message_device = hud_message_device{}
+
+    # Temps en segons d'espera abans d'iniciar (compte enrere)
+    @editable PreGameDelay : float = 5.0
 
     # Interval en segons per comprovar proximitat de l'aigua
-    @editable ProximityCheckInterval : float = 2.0
+    @editable ProximityCheckInterval : float = 1.5
 
-    # --- Estat intern ---
-    var GameState : int = 0  # 0=Waiting, 1=Playing, 2=Finished
+    var GameState : int = 0
+    var FinishedPlayers : int = 0
 
     OnBegin<override>()<suspends> : void =
-        Print("ASCENT — Esperant jugadors...")
-        set GameState = 0
-
-        # Petit compte enrere abans d'iniciar
-        Sleep(3.0)
+        Print("[GM] ASCENT inicialitzat — esperant {PreGameDelay}s")
+        WaitingHUD.ShowAllPlayers()
+        Sleep(PreGameDelay)
+        WaitingHUD.HideAllPlayers()
 
         StartGame()
 
-        # Esperar victòria en paral·lel amb la comprovació de proximitat
         race:
-            WaitForVictory()
+            ListenForFinish()
             ProximityCheckLoop()
 
-    # Inicia tots els sistemes alhora
     StartGame() : void =
         set GameState = 1
-        Print("ASCENT — Partida iniciada!")
+        set FinishedPlayers = 0
+        Print("[GM] Partida iniciada!")
         Timer.StartTimer()
         Water.StartWaterRise()
 
-    # Espera que el jugador activi el trigger del cim
-    WaitForVictory()<suspends> : void =
-        let Payload := FinishTrigger.TriggeredEvent.Await()
-        if (Agent := Payload.Agent?):
-            if (FinishPlayer := player[Agent]):
-                OnPlayerFinish(FinishPlayer)
+    # Escolta el trigger de victòria en bucle (suport per múltiples jugadors)
+    ListenForFinish()<suspends> : void =
+        loop:
+            let Payload := FinishTrigger.TriggeredEvent.Await()
+            if (GameState = 1):
+                if (Agent := Payload.Agent?):
+                    if (FinishPlayer := player[Agent]):
+                        spawn { HandlePlayerFinish(FinishPlayer) }
 
-    # Comprova cada N segons si l'aigua és massa a prop del jugador
+    # Gestiona la victòria d'un jugador concret
+    HandlePlayerFinish(Player : player)<suspends> : void =
+        set FinishedPlayers = FinishedPlayers + 1
+        let FinalTime : int = Timer.GetElapsedSeconds()
+        Print("[GM] Jugador acabat — {Timer.GetFormattedTime()} (#{FinishedPlayers})")
+
+        # Si és el primer en acabar, atura l'aigua i el timer
+        if (FinishedPlayers = 1):
+            set GameState = 2
+            Timer.StopTimer()
+            Water.StopWaterRise()
+
+        Leaderboard.SaveScore(FinalTime, Player)
+
+    # Comprova cada ProximityCheckInterval si l'aigua és massa a prop dels jugadors
     ProximityCheckLoop()<suspends> : void =
         loop:
             if (GameState <> 1):
                 break
             Sleep(ProximityCheckInterval)
-            # TODO: obtenir alçada del jugador via fort_character.GetTransform()
-            # i passar-la a Timer.CheckWaterProximity(PlayerHeight)
 
-    # Executat quan un jugador arriba al cim
-    OnPlayerFinish(Player : player) : void =
-        if (GameState = 1):
-            set GameState = 2
-            Print("ASCENT — Victòria!")
-
-            Timer.StopTimer()
-            Water.StopWaterRise()
-
-            let FinalTime : int = Timer.GetElapsedSeconds()
-            Leaderboard.SaveScore(FinalTime, Player)
-
-            Sleep(2.0)
-            Leaderboard.ShowLeaderboard()
+            let Players : []player = GetPlayspace().GetPlayers()
+            for (Player : Players):
+                if (Character := Player.GetFortCharacter[]):
+                    let PlayerPos : vector3 = Character.GetTransform().Translation
+                    Timer.CheckWaterProximity(PlayerPos.Z, Player)

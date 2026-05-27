@@ -4,35 +4,41 @@ using { /Fortnite.com/Game }
 using { /Verse.org/Simulation }
 using { /UnrealEngine.com/Temporary/Diagnostics }
 
-# LeaderboardManager
-# Guarda el temps final de cada jugador al leaderboard de UEFN.
-# Menys temps = millor resultat, per això es guarda com a valor negatiu.
+# Guarda la puntuació de cada jugador al leaderboard de UEFN i mostra el resultat final.
+# Puntuació = temps en ms negatiu (menys temps = puntuació més alta = millor posició).
 
 leaderboard_manager := class(creative_device):
 
-    # Dispositiu de leaderboard de UEFN (assignar al editor)
+    # Dispositiu leaderboard de UEFN (configurar al editor)
     @editable Leaderboard : leaderboard_device = leaderboard_device{}
 
-    # HUD per mostrar el temps final en pantalla al acabar
-    @editable FinishHUD : hud_message_device = hud_message_device{}
+    # HUD de victòria — configurat al editor amb text de felicitació
+    # (es mostra individualment a cada jugador quan acaba)
+    @editable VictoryHUD : hud_message_device = hud_message_device{}
 
-    # Guarda la puntuació d'un jugador quan acaba la partida
-    # TimeInSeconds: temps total de la partida
-    # Player: el jugador que ha acabat
-    SaveScore(TimeInSeconds : int, Player : player) : void =
-        Print("Leaderboard: Guardant temps {TimeInSeconds}s per jugador")
+    # Temps en segons de pausa entre el missatge de victòria i el leaderboard
+    @editable LeaderboardDelay : float = 3.0
 
-        # Guardar al leaderboard: negatiu perquè menys temps = millor posició
+    # Guarda la puntuació i mostra el resultat al jugador que ha acabat
+    SaveScore(TimeInSeconds : int, Player : player)<suspends> : void =
         let Score : float = float(TimeInSeconds) * -1.0
         Leaderboard.SetScoreForPlayer(Player, Score, false)
 
-        # Mostrar missatge de felicitació amb el temps
-        let Minutes : int = TimeInSeconds / 60
-        let Seconds : int = TimeInSeconds - (Minutes * 60)
-        let MinStr : string = if (Minutes < 10) then "0{Minutes}" else "{Minutes}"
-        let SecStr : string = if (Seconds < 10) then "0{Seconds}" else "{Seconds}"
-        Print("Has completat ASCENT en {MinStr}:{SecStr}!")
+        let TimeStr : string = FormatTime(TimeInSeconds)
+        Print("[LB] Temps final: {TimeStr} — score: {Score}")
 
-    # Mostra el leaderboard a tots els jugadors (cridat en acabar)
+        VictoryHUD.Show(Player)
+
+        Sleep(LeaderboardDelay)
+        Leaderboard.Show()
+
+    # Mostra el leaderboard a tots (cridat si tots els jugadors han acabat)
     ShowLeaderboard() : void =
         Leaderboard.Show()
+
+    FormatTime(TotalSeconds : int) : string =
+        let M : int = TotalSeconds / 60
+        let S : int = TotalSeconds - (M * 60)
+        let MinStr : string = if (M < 10) then "0{M}" else "{M}"
+        let SecStr : string = if (S < 10) then "0{S}" else "{S}"
+        "{MinStr}:{SecStr}"

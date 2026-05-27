@@ -3,35 +3,42 @@ using { /Verse.org/Simulation }
 using { /UnrealEngine.com/Temporary/Diagnostics }
 using { /UnrealEngine.com/Temporary/SpatialMath }
 
-# WaterController
-# Mou el prop visual de l'aigua i activa zones de dany progressivament.
-# L'aigua s'accelera lleugerament a cada zona per augmentar la tensió.
+# Mou el prop visual de l'aigua cap amunt contínuament.
+# Activa damage_volume_device progressivament a mesura que puja.
+# La velocitat augmenta un AccelerationRate per cada zona superada.
 
 water_controller := class(creative_device):
 
-    # Prop visual de l'aigua (mesh pla blau/cian gran)
+    # Prop visual de l'aigua (mesh pla blau/cian gran centrat al mapa)
     @editable WaterProp : creative_prop = creative_prop{}
 
-    # Alçada inicial de l'aigua (sota el terra de la Zona 1)
+    # Posició X,Y del centre del prop d'aigua (per no forçar origen 0,0)
+    @editable WaterCenterX : float = 0.0
+    @editable WaterCenterY : float = 0.0
+
+    # Alçada inicial (per sota del terra de la Zona 1)
     @editable StartHeight : float = -800.0
 
-    # Velocitat base de pujada en units/segon (Zona 1)
+    # Velocitat base en units/segon a la Zona 1
     @editable BaseRiseSpeed : float = 120.0
 
     # Factor d'acceleració per zona (+10% per defecte)
     @editable AccelerationRate : float = 0.10
 
-    # Alçada màxima (just sota la plataforma de victòria)
+    # Alçada màxima (just per sota la plataforma de victòria)
     @editable MaxHeight : float = 27000.0
 
-    # Zones de dany pre-col·locades al mapa (una per cada "nivell" d'alçada)
-    # Afegeix-ne tantes com vulguis al UEFN editor, s'activaran en ordre de baix a dalt
+    # Damage volumes col·locats al mapa, ordenats de baix a dalt.
+    # S'activen progressivament quan l'aigua els supera.
     @editable DamageZones : []damage_volume_device = array{}
 
-    # Cada zona de dany cobreix aquesta alçada (units)
+    # Cada damage volume cobreix aquesta alçada (units)
     @editable DamageZoneHeight : float = 600.0
 
-    # --- Estat intern ---
+    # Quants damage zones s'activen per davant de la superfície visible
+    # (permet que el jugador mori si el toca, no just quan el mesh el cobreix)
+    @editable DamageZoneLeadDistance : float = 50.0
+
     var IsRising : logic = false
     var CurrentHeight : float = -800.0
     var CurrentZone : int = 1
@@ -40,63 +47,53 @@ water_controller := class(creative_device):
         set CurrentHeight = StartHeight
         MoveWaterProp(StartHeight)
 
-    # Inicia la pujada — cridat pel GameManager
     StartWaterRise() : void =
         set IsRising = true
-        Print("Aigua: Pujada iniciada — velocitat base {BaseRiseSpeed} u/s")
+        Print("[Agua] Pujada iniciada — {BaseRiseSpeed} u/s")
         spawn { RiseLoop() }
 
-    # Atura la pujada — cridat en victòria o fi de partida
     StopWaterRise() : void =
         set IsRising = false
-        Print("Aigua: Pujada aturada a {CurrentHeight} units")
+        Print("[Agua] Aturada a z={CurrentHeight}")
 
-    # Actualitza la zona actual per ajustar la velocitat
-    # Cridat pel CheckpointTracker quan el jugador avança de zona
+    # Cridat per CheckpointTracker quan el jugador avança de zona
     SetZone(Zone : int) : void =
         set CurrentZone = Zone
-        let Speed : float = GetCurrentSpeed()
-        Print("Aigua: Zona {Zone} — nova velocitat {Speed} u/s")
+        Print("[Agua] Zona {Zone} — {GetCurrentSpeed()} u/s")
 
-    # Retorna l'alçada actual (usada pel TimerDisplay per avisar de proximitat)
     GetCurrentHeight() : float = CurrentHeight
 
-    # Retorna la velocitat actual tenint en compte la zona
     GetCurrentSpeed() : float =
         let ZoneBonus : float = float(CurrentZone - 1) * AccelerationRate
-        return BaseRiseSpeed * (1.0 + ZoneBonus)
+        BaseRiseSpeed * (1.0 + ZoneBonus)
 
-    # Bucle principal de pujada (s'executa cada segon)
+    # Bucle principal: tick cada 0.1s per moviment fluid
     RiseLoop()<suspends> : void =
+        let Tick : float = 0.1
         loop:
             if (not IsRising):
                 break
             if (CurrentHeight >= MaxHeight):
-                Print("Aigua: Alçada màxima assolida")
+                Print("[Agua] Alçada màxima assolida")
                 break
-
-            let RiseAmount : float = GetCurrentSpeed()
-            set CurrentHeight = CurrentHeight + RiseAmount
+            set CurrentHeight = CurrentHeight + GetCurrentSpeed() * Tick
             MoveWaterProp(CurrentHeight)
-            ActivateDamageZonesUpTo(CurrentHeight)
+            ActivateDamageZonesUpTo(CurrentHeight + DamageZoneLeadDistance)
+            Sleep(Tick)
 
-            Sleep(1.0)
-
-    # Mou el prop visual de l'aigua a la nova alçada
     MoveWaterProp(Height : float) : void =
         let NewTransform : transform = transform:
-            Translation := vector3{X := 0.0, Y := 0.0, Z := Height}
+            Translation := vector3{X := WaterCenterX, Y := WaterCenterY, Z := Height}
             Rotation := rotation{}
             Scale := vector3{X := 1.0, Y := 1.0, Z := 1.0}
-        if (WaterProp.TeleportTo[NewTransform, false]):
+        if (WaterProp.TeleportTo[NewTransform]):
             false
         else:
             false
 
-    # Activa les damage zones que queden per sota de l'alçada actual
-    # Les zones han d'estar col·locades al UEFN ordenades de baix a dalt
+    # Activa les damage zones que queden per sota de l'alçada indicada
     ActivateDamageZonesUpTo(Height : float) : void =
         for (Index -> Zone : DamageZones):
-            let ZoneThreshold : float = StartHeight + (float(Index) * DamageZoneHeight)
-            if (Height >= ZoneThreshold):
+            let Threshold : float = StartHeight + float(Index + 1) * DamageZoneHeight
+            if (Height >= Threshold):
                 Zone.Enable()

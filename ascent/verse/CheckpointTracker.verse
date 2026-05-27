@@ -4,68 +4,54 @@ using { /Fortnite.com/Game }
 using { /Verse.org/Simulation }
 using { /UnrealEngine.com/Temporary/Diagnostics }
 
-# CheckpointTracker
 # Gestiona els 5 checkpoints del mapa.
-# En activar cada checkpoint: notifica el WaterController (zona nova)
-# i mostra un missatge HUD al jugador.
+# Quan s'activa un checkpoint: notifica el WaterController (zona nova)
+# i mostra un missatge HUD específic per zona al jugador.
 
 checkpoint_tracker := class(creative_device):
 
-    # Els 5 checkpoints, un per zona (assignar al UEFN editor)
-    @editable Checkpoint1 : checkpoint_device = checkpoint_device{}  # Zona 1 — Soterrani
-    @editable Checkpoint2 : checkpoint_device = checkpoint_device{}  # Zona 2 — Aparcament
-    @editable Checkpoint3 : checkpoint_device = checkpoint_device{}  # Zona 3 — Oficines
-    @editable Checkpoint4 : checkpoint_device = checkpoint_device{}  # Zona 4 — Teulades
-    @editable Checkpoint5 : checkpoint_device = checkpoint_device{}  # Zona 5 — El Cim
+    # Els 5 checkpoints (un per zona) — assignar al UEFN editor
+    @editable Checkpoint1 : checkpoint_device = checkpoint_device{}
+    @editable Checkpoint2 : checkpoint_device = checkpoint_device{}
+    @editable Checkpoint3 : checkpoint_device = checkpoint_device{}
+    @editable Checkpoint4 : checkpoint_device = checkpoint_device{}
+    @editable Checkpoint5 : checkpoint_device = checkpoint_device{}
 
-    # Missatge HUD per mostrar feedback de checkpoint
-    @editable HUDMessage : hud_message_device = hud_message_device{}
+    # Un hud_message_device per zona, configurat al editor amb el text de cada zona.
+    # Exemple: "Zona 1 — Soterrani ✓ Checkpoint guardat"
+    @editable ZoneHUDs : []hud_message_device = array{}
 
-    # Referència al WaterController per actualitzar velocitat per zona
+    # Referència al WaterController per pujar la velocitat en avançar de zona
     @editable Water : water_controller = water_controller{}
 
-    # Noms de les zones per als missatges HUD
-    ZoneNames : []string = array:
-        "Zona 1 — Soterrani"
-        "Zona 2 — Aparcament"
-        "Zona 3 — Oficines"
-        "Zona 4 — Teulades"
-        "Zona 5 — El Cim"
-
-    # Zona actual del jugador (1–5)
+    # Zona actual (0 = no s'ha activat cap checkpoint encara)
     var CurrentZone : int = 0
 
     OnBegin<override>()<suspends> : void =
-        # Escoltar tots els checkpoints en paral·lel
-        race:
-            ListenCheckpoint(Checkpoint1, 1)
-            ListenCheckpoint(Checkpoint2, 2)
-            ListenCheckpoint(Checkpoint3, 3)
-            ListenCheckpoint(Checkpoint4, 4)
-            ListenCheckpoint(Checkpoint5, 5)
+        # Cada checkpoint escolta de forma independent i indefinida
+        spawn { ListenCheckpoint(Checkpoint1, 1) }
+        spawn { ListenCheckpoint(Checkpoint2, 2) }
+        spawn { ListenCheckpoint(Checkpoint3, 3) }
+        spawn { ListenCheckpoint(Checkpoint4, 4) }
+        spawn { ListenCheckpoint(Checkpoint5, 5) }
 
-    # Escolta un checkpoint i actua quan s'activa
     ListenCheckpoint(CP : checkpoint_device, ZoneNumber : int)<suspends> : void =
         loop:
-            # Esperar a que el jugador activi aquest checkpoint
             let Payload := CP.CheckpointActivatedEvent.Await()
-
-            # Ignorar si el jugador ja estava en una zona superior
+            # Només processar si és una zona nova (no un respawn al mateix CP)
             if (ZoneNumber > CurrentZone):
                 set CurrentZone = ZoneNumber
                 OnCheckpointActivated(ZoneNumber, Payload.Agent)
 
-    # Executat quan un checkpoint nou és activat
     OnCheckpointActivated(ZoneNumber : int, Agent : agent) : void =
-        # Actualitzar velocitat de l'aigua per la nova zona
+        Print("[CP] Zona {ZoneNumber} activada")
         Water.SetZone(ZoneNumber)
+        ShowZoneHUD(ZoneNumber, Agent)
 
-        # Mostrar missatge HUD al jugador
-        if (ZoneName := ZoneNames[ZoneNumber - 1]):
-            HUDMessage.Show(Agent)
-            Print("Checkpoint activat: {ZoneName}")
-        else:
-            Print("Checkpoint activat: Zona {ZoneNumber}")
+    # Mostra el HUD de zona corresponent (configurat al editor amb el text)
+    ShowZoneHUD(ZoneNumber : int, Agent : agent) : void =
+        let HUDIndex : int = ZoneNumber - 1
+        if (HUD := ZoneHUDs[HUDIndex]):
+            HUD.Show(Agent)
 
-    # Retorna la zona actual (usada pel GameManager)
     GetCurrentZone() : int = CurrentZone
