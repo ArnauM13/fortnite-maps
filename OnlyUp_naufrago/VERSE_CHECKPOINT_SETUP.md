@@ -19,16 +19,46 @@ devices nadius; Verse per si sol no crea geometria ni triggers físics.
    algun error de sintaxi puntual, sol ser una coma/indentació — el disseny està
    calcat dels tutorials oficials d'Epic (persistència, leaderboard, trigger_device).
 
-2. **Checkpoints** — a cada plataforma on vulguis que es pugui reaparèixer:
-   - Col·loca un **Trigger Device**, pla i ample, arran de la plataforma.
-   - Arrossega el device Verse **climb_checkpoint** al costat.
-   - A les seves propietats, assigna el Trigger al camp `Trigger`.
-   - Repeteix a totes les plataformes clau (no cal numerar-los ni ordenar-los).
+2. **Checkpoints.**
+
+   **Primer, mesura.** Puja el mapa sencer llegint l'altímetre (ja el tens al
+   HUD) i apunta l'alçada de cada plataforma on t'aturaries a respirar. Aquesta
+   llista és el teu pla de col·locació — no calculis res a ull.
+
+   **Quants:** un cada 30–60 s de pujada neta. Per a la majoria de mapes Only Up
+   això són **8–12 checkpoints**. Menys, i la gent abandona; més, i desapareix la
+   tensió que fa funcionar el gènere. Ara mateix en tens **zero**, així que
+   qualsevol xifra dins d'aquest rang ja és una millora enorme.
+
+   **On:** SEMPRE just DESPRÉS d'un tram difícil, mai abans. Superar el salt
+   dur ha de ser el que et guarda el progrés — és la recompensa. Posa'ls en
+   plataformes amples on el jugador s'aturaria de manera natural.
+
+   **Com:**
+   - Un **Trigger Device** per plataforma, pla i ample, arran del terra i
+     **centrat a la plataforma**. El respawn usa l'origen del trigger, o sigui
+     que un trigger descentrat (o un de llarg que cobreixi dues plataformes) et
+     reapareixerà al buit.
+   - Arrossega el device Verse **climb_checkpoint** al costat i assigna el
+     Trigger al camp `Trigger`.
+   - No cal numerar-los ni ordenar-los: el darrer que trepitges guanya.
+
+   **Comprova aquestes propietats del Trigger** (per aquí és per on peta):
+   - **Nombre màxim d'activacions → il·limitat.** Si queda limitat, el
+     checkpoint deixa de funcionar després de N usos. Amb 16 jugadors passant-hi
+     una i altra vegada, un límit es menja de seguida.
+   - **VFX i so del trigger → desactivats.** Per defecte pulsen; amb 10
+     checkpoints el mapa queda ple de marcadors sorollosos.
+   - **Activat a l'inici de partida → sí.**
+   - Ha de detectar jugadors per solapament, sense prémer cap botó.
 
 3. **Reset en caiguda** — un sol cop:
    - Col·loca un **Trigger Device** gegant, pla, molt per sota de tota la
      construcció (per sota d'on cauria mai un jugador), cobrint tota l'àrea de joc en XY.
    - Arrossega el device **fall_reset_manager** i assigna aquest trigger a `FallResetZone`.
+   - Mateixes propietats que els altres: activacions il·limitades, sense VFX ni so.
+   - **Que sobri per tots costats.** Si un jugador cau fora del volum en XY, no
+     el recupera ningú i es queda caient — pitjor que abans del canvi.
 
 4. **Leaderboard** — opcional però recomanat:
    - Col·loca 3–5 **Billboard Devices** a prop del punt d'inici.
@@ -43,6 +73,25 @@ devices nadius; Verse per si sol no crea geometria ni triggers físics.
    manera fiable d'evitar que et facin caure des d'una plataforma estreta quan
    hi ha 16 jugadors alhora — un dels motius de frustració més citats en aquest
    gènere.
+
+## Proves abans de publicar
+
+Aquest mapa ja té jugadors actius. Una regressió aquí costa jugadors reals, no
+és una prova en buit. Comprova-ho tot en playtest abans de publicar:
+
+- [ ] L'altímetre segueix funcionant i "NEW BEST!" salta en superar el rècord.
+      (Els dos errors de compilació tombaven el mòdul sencer, i l'altímetre hi
+      viu — és el primer que cal confirmar que no s'ha trencat.)
+- [ ] Trepitjar un checkpoint no fa ni soroll ni efecte visual.
+- [ ] Caure des de qualsevol punt et torna a l'últim checkpoint, dret sobre la
+      plataforma i mirant cap on miraves.
+- [ ] Caure ABANS del primer checkpoint et torna a l'spawn inicial.
+- [ ] El mateix checkpoint funciona 10 vegades seguides (prova del límit
+      d'activacions).
+- [ ] Caure des de la vora exterior del mapa també et recupera — el volum de
+      caiguda ha de sobrar per tots costats.
+- [ ] Sortir i tornar a entrar conserva `BestHeightMeters` al leaderboard.
+- [ ] Amb 2 jugadors alhora, cadascú manté el SEU checkpoint (no es trepitgen).
 
 ## Estat actual del mapa (verificat sobre els actors del nivell)
 
