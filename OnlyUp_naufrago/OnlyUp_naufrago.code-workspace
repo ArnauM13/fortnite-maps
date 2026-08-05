@@ -1,0 +1,57 @@
+{
+    "folders": [
+        {
+            "name": "/glicho@fortnite.com/OnlyUp_naufrago",
+            "path": "C:/Users/arnau/Documents/Fortnite Projects/OnlyUp_naufrago/Content"
+        },
+        {
+            "name": "/glicho@fortnite.com/OnlyUp_naufrago (Assets)",
+            "path": "C:/Users/arnau/AppData/Local/UnrealEditorFortnite/Saved/VerseProject/OnlyUp_naufrago/OnlyUp_naufrago-Assets"
+        },
+        {
+            "name": "vproject - DO NOT MODIFY",
+            "path": "C:/Users/arnau/AppData/Local/UnrealEditorFortnite/Saved/VerseProject/OnlyUp_naufrago/vproject"
+        },
+        {
+            "name": "/Verse.org",
+            "path": "C:/Users/arnau/AppData/Local/UnrealEditorFortnite/Saved/VerseProject/OnlyUp_naufrago/Verse"
+        },
+        {
+            "name": "/UnrealEngine.com",
+            "path": "C:/Users/arnau/AppData/Local/UnrealEditorFortnite/Saved/VerseProject/OnlyUp_naufrago/UnrealEngine"
+        },
+        {
+            "name": "/Fortnite.com",
+            "path": "C:/Users/arnau/AppData/Local/UnrealEditorFortnite/Saved/VerseProject/OnlyUp_naufrago/Fortnite"
+        }
+    ],
+    "settings": {
+        "files.exclude": {
+            "**/*.uasset": true,
+            "**/*.umap": true,
+            "**/*.png": true,
+            "**/*.jpg": true,
+            "**/*.tga": true,
+            "_INT": true,
+            "**/*.vproject": true,
+            "__ExternalActors__": true,
+            "__ExternalObjects__": true,
+            "Collections": true,
+            "Developers": true
+        },
+        "files.autoSave": "onWindowChange",
+        "editor.bracketPairColorization.enabled": false,
+        "editor.acceptSuggestionOnEnter": "off"
+    },
+    "launch": {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "name": "Verse Debug",
+                "type": "verse",
+                "request": "attach",
+                "debugServer": 1961
+            }
+        ]
+    }
+}

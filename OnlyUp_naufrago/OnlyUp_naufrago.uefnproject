@@ -1,0 +1,64 @@
+{
+	"fileVersion": 15,
+	"title": "OnlyUp_naufrago",
+	"description": "",
+	"keyArt": "",
+	"docsUrl": "",
+	"apiAccess": "Private",
+	"compatibilityVersion": "41.30",
+	"requiredRedirectorStartingVersion": "39.50.50854790",
+	"editorPermissions": [],
+	"epicApp": "",
+	"sortPriority": 0,
+	"featureSet": "",
+	"plugins": [
+		{
+			"name": "OnlyUp_naufrago",
+			"bIsRoot": true,
+			"bIsPublic": false
+		}
+	],
+	"dataSets":
+	{
+		"matchmaking":
+		{
+			"maxPlayers": 16,
+			"maxTeamCount": 1,
+			"maxTeamSize": 16,
+			"maxSocialPartySize": 16,
+			"allowJoinInProgress": true,
+			"allowSquadFillOption": false,
+			"islandQueuePrivacy": "Unrestricted",
+			"minPlayers": 1,
+			"overtimePlayerTarget": 1,
+			"queueMainDuration": 5,
+			"queueOvertimeDuration": 5,
+			"useSkillBasedMatchmaking": false,
+			"ratingType": "",
+			"version": 1
+		},
+		"experimental":
+		{
+			"sceneGraph":
+			{
+				"bIsSceneGraphSystemAllowed": true,
+				"bEnableOneFilePerEntity": false
+			},
+			"personaDevice":
+			{
+				"bEnablePersonaDevice": false
+			},
+			"version": 1
+		}
+	},
+	"bindings":
+	{
+		"projectId": "6c36daf1-4ab8-f422-516c-be89b2cba2ce",
+		"modules":
+		{
+			"OnlyUp_naufrago": "c8428b4a-406f-04cf-ad42-c08973b3cf9e"
+		},
+		"bSuppressAutomaticVersePathAssignment": false,
+		"projectVersePath": "/glicho@fortnite.com/OnlyUp_naufrago"
+	}
+}
