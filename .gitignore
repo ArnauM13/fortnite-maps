@@ -1,4 +1,4 @@
-# Unreal Engine / UEFN
+# === Unreal Engine / UEFN — artefactes de build (regenerables) ===
 Binaries/
 Build/
 DerivedDataCache/
@@ -6,21 +6,31 @@ Intermediate/
 Saved/
 *.VC.db
 *.opendb
-*.uasset
-*.umap
-*.uplugin
 *.uproject.bak
 
-# OS
+# === UEFN — estat local del projecte ===
+# .lore/ és la cache content-addressed de UEFN (~11 MB): conté un `identity`
+# lligat a aquesta màquina, locks, i un índex que apunta al store remot d'Epic.
+# Es regenera sol en obrir el projecte. Mai al repo.
+.lore/
+
+# NOTA IMPORTANT sobre .uasset / .umap / .uplugin
+# ------------------------------------------------
+# NO s'ignoren. En un projecte UEFN aquests fitxers SÓN el mapa: la geometria,
+# els materials, el nivell i els actors col·locats. No són artefactes de build.
+# Ignorar-los (com feia la versió anterior d'aquest fitxer) deixava el repo
+# sense res del mapa — només docs i scripts Verse, impossible de reconstruir.
+
+# === OS ===
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# IDE
+# === IDE ===
 .vscode/
 .idea/
 *.suo
 *.user
 
-# Logs
+# === Logs ===
 *.log
