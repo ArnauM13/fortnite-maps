@@ -49,7 +49,11 @@ fall_reset_manager := class(creative_device):
             FortCharacter := Player.GetFortCharacter[]
             CheckpointData := LastCheckpointMap[Player]
             RespawnPosition := vector3{X := CheckpointData.X, Y := CheckpointData.Y, Z := CheckpointData.Z}
+            # Keep the direction the player was already facing. Teleporting with
+            # rotation{} snaps everyone to world-north on every respawn, which is
+            # disorienting when you respawn dozens of times per run.
+            FacingRotation := FortCharacter.GetTransform().Rotation
         then:
-            if (FortCharacter.TeleportTo[RespawnPosition, rotation{}]):
+            if (FortCharacter.TeleportTo[RespawnPosition, FacingRotation]):
             else:
                 Print("Checkpoint teleport failed for player - check FallResetZone/checkpoint placement")

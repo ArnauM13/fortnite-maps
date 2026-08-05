@@ -16,6 +16,13 @@ climb_checkpoint := class(creative_device):
     @editable
     Trigger:trigger_device = trigger_device{}
 
+    # Respawn slightly ABOVE the trigger plate. The trigger sits flush with the
+    # platform, so respawning at its exact origin drops the player into the
+    # floor collision and can shove them off the edge. A small lift lets them
+    # land cleanly on top instead.
+    @editable
+    RespawnHeightOffset:float = 100.0
+
     OnBegin<override>()<suspends>:void=
         Trigger.TriggeredEvent.Subscribe(OnPlayerReachedCheckpoint)
 
@@ -27,6 +34,6 @@ climb_checkpoint := class(creative_device):
             set LastCheckpointMap[Player] = checkpoint_data:
                 X := Position.X
                 Y := Position.Y
-                Z := Position.Z
+                Z := Position.Z + RespawnHeightOffset
         else:
             Print("Checkpoint trigger fired without a valid player")

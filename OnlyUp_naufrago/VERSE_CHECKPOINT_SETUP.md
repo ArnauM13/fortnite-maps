@@ -44,10 +44,43 @@ devices nadius; Verse per si sol no crea geometria ni triggers físics.
    hi ha 16 jugadors alhora — un dels motius de frustració més citats en aquest
    gènere.
 
+## Estat actual del mapa (verificat sobre els actors del nivell)
+
+Al nivell hi ha **650 actors**, però de devices Verse **només hi ha col·locat
+`distance_device`** (l'altímetre). Cap `climb_checkpoint`, `fall_reset_manager`
+ni `climb_leaderboard` — el codi existeix, el muntatge està pendent.
+
+També hi ha ja al nivell, i val la pena mirar si es poden reaprofitar:
+- ~33 actors amb "Trigger" (potser servibles com a plaques de checkpoint)
+- 16 Player Spawns · 1 Billboard · 7 Mutator Zones · 28 Volumes
+
+## Correccions aplicades al codi (abans del primer build)
+
+El codi original no s'havia compilat mai i tenia errors que haurien petat el
+build **després** de col·locar tots els devices. Ja estan arreglats:
+
+1. `player_climb_manager.ReportHeight` — el cos de l'arquetip barrejava un camp
+   amb una crida `MakePlayerClimbStats<constructor>(...)`. `<constructor>` és un
+   especificador de *declaració*, no de *crida*; això no compila. Ara construeix
+   el `player_climb_stats` amb els camps directament.
+2. `player_climb_manager.GetPlayerClimbStats` — codi mort, i el seu `<decides>`
+   no fallava mai. Eliminat.
+3. `player_climb_stats.MakePlayerClimbStats` — sense usos després d'1 i 2. Eliminat.
+4. `climb_leaderboard` — interpolava un `message` dins d'un altre `message`. Ara
+   el rànquing interpola l'`agent` directament, que és com Verse resol el nom.
+5. `climb_checkpoint` — nou `RespawnHeightOffset` (100 per defecte). Reaparèixer
+   a l'origen exacte del trigger et deixava dins la col·lisió del terra.
+6. `fall_reset_manager` — conservava `rotation{}`, cosa que t'orientava al nord
+   del món a cada reaparició. Ara manté cap on miraves.
+
 ## Notes
 - El codi segueix els patrons oficials d'Epic (Persistent Player Statistics,
-  Make Your Own In-Game Leaderboard, trigger_device API) però no s'ha pogut
-  compilar en aquest entorn (no hi ha UEFN al sandbox). Revisa els errors del
-  compilador la primera vegada — solen ser detalls menors de sintaxi.
+  Make Your Own In-Game Leaderboard, trigger_device API), però **encara no s'ha
+  pogut compilar** aquí (no hi ha UEFN al sandbox). Compila ABANS de col·locar
+  res: si queda algun detall de sintaxi, arreglar-lo amb 0 devices posats és
+  molt més barat que amb 30.
 - La detecció de caiguda és 100% via el `FallResetZone` (un trigger sota el
   mapa), no per velocitat/posició — més senzill i robust que vigilar cada tick.
+- `LastCheckpointMap` no és persistent entre republicacions de l'illa: el
+  checkpoint sobreviu a reconnectar dins la sessió, però no a un republish.
+  El rècord d'alçada (`BestHeightMeters`) sí que persisteix.

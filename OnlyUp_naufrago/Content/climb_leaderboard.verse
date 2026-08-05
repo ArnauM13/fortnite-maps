@@ -17,7 +17,7 @@ climb_leaderboard := class(creative_device):
 
     ClimbManager:player_climb_manager = player_climb_manager{}
 
-    RankMessage<localizes>(Rank:int, PlayerName:message, Height:int):message = "#{Rank}  {PlayerName}  -  {Height}m"
+    RankMessage<localizes>(Rank:int, Climber:agent, Height:int):message = "#{Rank}  {Climber}  -  {Height}m"
     EmptyRankMessage<localizes>(Rank:int):message = "#{Rank}  ---"
 
     OnBegin<override>()<suspends>:void=
@@ -33,11 +33,9 @@ climb_leaderboard := class(creative_device):
         Sorted := SortByHeightDescending(AllStats)
         for (Index -> Board : Leaderboards):
             if (Entry := Sorted[Index]):
-                Board.SetText(RankMessage(Index + 1, PlayerNameMessage(Entry.Player), Entry.Stats.BestHeightMeters))
+                Board.SetText(RankMessage(Index + 1, Entry.Player, Entry.Stats.BestHeightMeters))
             else:
                 Board.SetText(EmptyRankMessage(Index + 1))
-
-    PlayerNameMessage<localizes>(Player:player):message = "{Player}"
 
     # Small insertion sort - there are only ever a handful of players/boards,
     # so this stays fast, simple, and easy to follow without extra libraries.

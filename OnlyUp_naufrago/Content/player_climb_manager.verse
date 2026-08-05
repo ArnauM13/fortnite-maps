@@ -20,15 +20,6 @@ player_climb_manager := class():
         for (Player : Players):
             InitializePlayer(Player)
 
-    # Returns the current climb stats for a given agent.
-    GetPlayerClimbStats<public>(Agent:agent)<decides><transacts>:player_climb_stats=
-        var Stats:player_climb_stats = player_climb_stats{}
-        if:
-            Player := player[Agent]
-            CurrentStats := PlayerClimbStatsMap[Player]
-            set Stats = MakePlayerClimbStats(CurrentStats)
-        Stats
-
     # Updates the player's best height only if the new height beats their
     # current record. Returns true if this was a new personal best.
     ReportHeight<public>(Agent:agent, HeightMeters:int):logic=
@@ -38,8 +29,8 @@ player_climb_manager := class():
             CurrentStats := PlayerClimbStatsMap[Player]
             HeightMeters > CurrentStats.BestHeightMeters
             set PlayerClimbStatsMap[Player] = player_climb_stats:
+                Version := CurrentStats.Version
                 BestHeightMeters := HeightMeters
-                MakePlayerClimbStats<constructor>(CurrentStats)
             set IsNewBest = true
         IsNewBest
 

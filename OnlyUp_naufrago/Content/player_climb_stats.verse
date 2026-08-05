@@ -12,12 +12,6 @@ player_climb_stats<public> := class<final><persistable>:
     # The highest height (in meters) this player has ever reached.
     BestHeightMeters<public>:int = 0
 
-# Creates a new player_climb_stats with the same values as the previous one.
-# Required because persistable classes can't have their fields mutated directly.
-MakePlayerClimbStats<constructor>(OldStats:player_climb_stats)<transacts> := player_climb_stats:
-    Version := OldStats.Version
-    BestHeightMeters := OldStats.BestHeightMeters
-
 # Maps each player to their persistable climb stats. Declared once here at
 # module level so every device/file in this project shares the same table.
 var PlayerClimbStatsMap:weak_map(player, player_climb_stats) = map{}
