@@ -7,6 +7,7 @@ Col·lecció de mapes per Fortnite creats amb UEFN (Unreal Editor for Fortnite) 
 | Mapa | Tipus | Estat | Codi |
 |------|-------|-------|------|
 | [ASCENT](./ascent/) | Parkour vertical | En desenvolupament | — |
+| [EXTRACTION RUSH](./extraction-rush/) | Extraction shooter | En desenvolupament | — |
 
 ## Tecnologia
 
@@ -19,6 +20,7 @@ Col·lecció de mapes per Fortnite creats amb UEFN (Unreal Editor for Fortnite) 
 ```
 fortnite-maps/
 ├── ascent/          ← Parkour vertical (torre que s'enfonsa)
+├── extraction-rush/ ← Extraction shooter (loot i escapa abans de la tempesta)
 ├── _template/       ← Plantilla base per nous mapes
 └── README.md
 ```
