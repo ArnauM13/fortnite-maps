@@ -67,7 +67,7 @@ beacon_manager := class(creative_device):
             Area.Enable()
             BroadcastToAll()
             Print("Balisa: extracció temporal OBERTA — avisant tothom")
-            set NextSlot = Mod[Index + 1, BeaconAreas.Length] else 0
+            set NextSlot = if (Wrapped := Mod[Index + 1, BeaconAreas.Length]) then Wrapped else 0
             spawn { AutoCloseBeacon(Index) }
 
     # Tanca la balisa passat el temps.
