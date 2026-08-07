@@ -1,0 +1,18 @@
+# Detecció automàtica per defecte
+* text=auto
+
+# --- Text ---
+*.verse text eol=lf
+*.md    text eol=lf
+*.json  text eol=lf
+*.toml  text eol=lf
+
+# PowerShell a Windows vol CRLF
+*.ps1   text eol=crlf
+
+# --- Assets UEFN / Unreal ---
+# CRÍTIC: marcats com a binaris perquè git NO hi apliqui conversió d'EOL.
+# Un .uasset amb els salts de línia convertits queda corromput i el mapa
+# deixa d'obrir-se. També evita diffs il·legibles de milers de línies.
+*.uasset binary
+*.umap   binary

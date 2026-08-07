@@ -1,10 +1,10 @@
 # sync-to-uefn.ps1
 # Sincronitza els scripts Verse del repo al projecte UEFN
-# Executa'l des de PowerShell quan vulguis pujar canvis al UEFN
-# O deixa'l en mode --watch per sincronització automàtica
+# Executa des de PowerShell quan vulguis pujar canvis al UEFN
+# O deixa en mode --watch per sincronitzacio automatica
 
 $RepoVerse = "C:\Users\arnau\Desktop\fortnite-maps\ascent\verse"
-$UEFNProject = "C:\Users\arnau\Documents\Fortnite Projects\ASCENT"
+$UEFNProject = "C:\Users\arnau\Documents\Fortnite Projects\ASCENT\Content"
 $Files = @(
     "GameManager.verse",
     "WaterController.verse",
@@ -36,9 +36,9 @@ function Sync-Files {
     }
 }
 
-# Mode watch: sincronitza automàticament cada 2 segons
+# Mode watch: sincronitza automaticament cada 2 segons
 if ($args[0] -eq "--watch") {
-    Write-Host "Mode WATCH actiu — sincronitzant cada 2s. Ctrl+C per aturar." -ForegroundColor Yellow
+    Write-Host "Mode WATCH actiu - sincronitzant cada 2s. Ctrl+C per aturar." -ForegroundColor Yellow
     Write-Host "Repo: $RepoVerse" -ForegroundColor Gray
     Write-Host "UEFN: $UEFNProject" -ForegroundColor Gray
     while ($true) {
@@ -46,7 +46,7 @@ if ($args[0] -eq "--watch") {
         Start-Sleep -Seconds 2
     }
 } else {
-    # Sincronització única
+    # Sincronitzacio unica
     Write-Host "Sincronitzant repo -> UEFN..." -ForegroundColor Yellow
     Sync-Files
 }
