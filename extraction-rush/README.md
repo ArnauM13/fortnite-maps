@@ -48,8 +48,13 @@ Aquesta tensió "risc-recompensa" és el motor de retenció: els jugadors tornen
 ## Estructura del projecte
 
 ```
-extraction-rush/
-├── verse/               ← Scripts Verse (lògica del joc)
+extraction-rush/                    ← projecte UEFN
+├── ExtractionRush.uefnproject      ← fitxer de projecte (plantilla)
+├── ExtractionRush.uplugin          ← plugin del projecte (plantilla)
+├── ExtractionRush.code-workspace   ← workspace de VS Code (plantilla)
+├── .urcignore                      ← exclusions de UEFN
+├── BUILD_SETUP.md                  ← ★ GUIA PER MUNTAR-HO A UEFN (cablejat)
+├── Content/             ← Scripts Verse (ubicació que UEFN espera)
 │   │   # --- Nucli de la ronda ---
 │   ├── GameManager.verse           ← Orquestra estats de la ronda
 │   ├── RaidTimer.verse             ← Timer de la ronda + fases
@@ -91,16 +96,22 @@ extraction-rush/
 - Unreal Engine 5 (Nanite, Lumen)
 - **Persistable data** (`weak_map(player, ...)`) per l'inventari entre partides
 
+## Com muntar-ho a UEFN
+
+👉 Segueix **[`BUILD_SETUP.md`](./BUILD_SETUP.md)**: crear el projecte, compilar el
+Verse, i col·locar i **cablejar cada dispositiu** (`@editable`) pas a pas.
+Comença pel "Mínim jugable (v0)" de la Part 7.
+
 ## Estat
 
 - [x] Disseny inicial
+- [x] Scripts Verse (nucli + v2)
+- [x] Projecte UEFN + guia de muntatge
+- [ ] Compilació del Verse a UEFN
 - [ ] Zona 1 — Ravals
 - [ ] Zona 2 — Centre
 - [ ] Zona 3 — La Bòveda
-- [ ] Sistema de loot per nivells (Verse)
-- [ ] Punts d'extracció rotatius
-- [ ] Inventari persistent
-- [ ] Missions diàries
-- [ ] Leaderboard
+- [ ] Cablejat de dispositius (v0 jugable)
+- [ ] Capes v2 (Heat, bosses, balises, botiga)
 - [ ] Testing de balanç
 - [ ] Publicació

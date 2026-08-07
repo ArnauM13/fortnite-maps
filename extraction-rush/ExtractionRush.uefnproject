@@ -1,0 +1,64 @@
+{
+	"fileVersion": 15,
+	"title": "ExtractionRush",
+	"description": "Extraction shooter per rondes curtes. Loot, escapa i no perdis l'estança.",
+	"keyArt": "",
+	"docsUrl": "",
+	"apiAccess": "Private",
+	"compatibilityVersion": "41.30",
+	"requiredRedirectorStartingVersion": "39.50.50854790",
+	"editorPermissions": [],
+	"epicApp": "",
+	"sortPriority": 0,
+	"featureSet": "",
+	"plugins": [
+		{
+			"name": "ExtractionRush",
+			"bIsRoot": true,
+			"bIsPublic": false
+		}
+	],
+	"dataSets":
+	{
+		"matchmaking":
+		{
+			"maxPlayers": 24,
+			"maxTeamCount": 24,
+			"maxTeamSize": 3,
+			"maxSocialPartySize": 3,
+			"allowJoinInProgress": true,
+			"allowSquadFillOption": true,
+			"islandQueuePrivacy": "Unrestricted",
+			"minPlayers": 1,
+			"overtimePlayerTarget": 1,
+			"queueMainDuration": 5,
+			"queueOvertimeDuration": 5,
+			"useSkillBasedMatchmaking": false,
+			"ratingType": "",
+			"version": 1
+		},
+		"experimental":
+		{
+			"sceneGraph":
+			{
+				"bIsSceneGraphSystemAllowed": true,
+				"bEnableOneFilePerEntity": false
+			},
+			"personaDevice":
+			{
+				"bEnablePersonaDevice": false
+			},
+			"version": 1
+		}
+	},
+	"bindings":
+	{
+		"projectId": "00000000-0000-0000-0000-000000000000",
+		"modules":
+		{
+			"ExtractionRush": "11111111-1111-1111-1111-111111111111"
+		},
+		"bSuppressAutomaticVersePathAssignment": false,
+		"projectVersePath": "/glicho@fortnite.com/ExtractionRush"
+	}
+}
