@@ -54,6 +54,7 @@ extraction-rush/                    ← projecte UEFN
 ├── ExtractionRush.code-workspace   ← workspace de VS Code (plantilla)
 ├── .urcignore                      ← exclusions de UEFN
 ├── BUILD_SETUP.md                  ← ★ GUIA PER MUNTAR-HO A UEFN (cablejat)
+├── build-playbook.html             ← checklist visual interactiu (obre al navegador)
 ├── Content/             ← Scripts Verse (ubicació que UEFN espera)
 │   │   # --- Nucli de la ronda ---
 │   ├── GameManager.verse           ← Orquestra estats de la ronda
@@ -99,8 +100,12 @@ extraction-rush/                    ← projecte UEFN
 ## Com muntar-ho a UEFN
 
 👉 Segueix **[`BUILD_SETUP.md`](./BUILD_SETUP.md)**: crear el projecte, compilar el
-Verse, i col·locar i **cablejar cada dispositiu** (`@editable`) pas a pas.
-Comença pel "Mínim jugable (v0)" de la Part 7.
+Verse, i col·locar i **cablejar cada dispositiu** (`@editable`) pas a pas, amb els
+fonaments obligatoris (terra, aparicions, ajustos), la guia d'operar l'editor i els
+noms dels dispositius en **castellà**. Comença pel "Mínim jugable (v0)" de la Part 7.
+
+Per a un **checklist visual interactiu** (caselles que es desen al navegador,
+imprimible), obre **[`build-playbook.html`](./build-playbook.html)**.
 
 ## Estat
 

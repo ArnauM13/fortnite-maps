@@ -24,12 +24,19 @@ cablejar cada dispositiu**.
 
 **Opció A (recomanada): projecte nou a UEFN.**
 
-1. UEFN → **Create Project** → plantilla **Blank** (o *Grid* per tenir terra).
+1. UEFN → **Proyecto nuevo** (New Project) → plantilla **Isla básica** / *Grid*
+   (porta terra, *Ajustes de la isla* i plataformes d'aparició). Evita *En blanco*
+   si ets principiant: te'ls deixa a faltar.
 2. Anomena'l `ExtractionRush`.
 3. Quan obri, tanca'l un moment i **copia tots els `.verse` de
    `extraction-rush/Content/` dins la carpeta `Content/` del projecte** que
    UEFN t'ha creat (típicament `Documents/Fortnite Projects/ExtractionRush/Content/`).
 4. Torna a obrir el projecte. Els scripts apareixeran al Verse Explorer.
+
+> 🧱 **Fonaments obligatoris que el Verse NO crea** (verifica'ls al panell
+> *Esquema* / Outliner): **terra** sòlid, un **Ajustes de la isla** (Island
+> Settings) i **4–8 «Plataforma de aparición de jugador»** (Player Spawn Pad).
+> Sense plataformes d'aparició, ningú apareix a la partida.
 
 > Els fitxers `ExtractionRush.uefnproject`, `.uplugin` i `.code-workspace`
 > d'aquest repo són **plantilles de referència**. UEFN genera els seus propis amb
@@ -288,6 +295,58 @@ Ajusta primer: durada de ronda (`raid_timer`), densitat de loot (`loot_manager`)
 i llindars de Heat (`heat_system`). Publica en privat, prova amb amics, itera.
 
 ---
+
+## Apèndix A — Operar UEFN sense assumir res
+
+Les accions que repetiràs, pas a pas (menús en **castellà**):
+
+- **Col·locar un dispositiu:** obre el *Cajón de contenido* (Content Drawer,
+  `Ctrl+Espai`), cerca'l pel nom, arrossega'l al visor 3D.
+- **Cablejar un camp de referència:** selecciona el dispositiu Verse → panell
+  *Detalles* (Details) → busca el camp → obre el desplegable i tria el dispositiu
+  de destí, o fes clic a la *comptagotes* i després clic al dispositiu al visor.
+- **Omplir una llista `[]`:** al camp de llista, clic a **«+»** per afegir un
+  element (índex 0), assigna'l, i repeteix «+» per cada dispositiu.
+- **Omplir un Generador de objetos:** venen **buits**; a *Detalles* assigna-hi
+  l'arma/objecte del navegador o no donarà res.
+- **Provar:** botó **Iniciar sesión** (Launch Session) a la barra superior.
+- **Compartir amb amics:** *Publicar ▸ Publicar en privado*.
+
+## Apèndix B — Noms dels dispositius (Verse → Castellà)
+
+| Verse | Nom al navegador (castellà) |
+|-------|------------------------------|
+| `storm_controller_device` | Controlador de tormenta |
+| `mutator_zone_device` | Zona de mutación |
+| `item_spawner_device` | Generador de objetos |
+| `capture_area_device` | Zona de captura |
+| `trigger_device` | Desencadenador |
+| `hud_message_device` | Mensajes de HUD |
+| `leaderboard_device` | Tabla de clasificación |
+| `billboard_device` | Cartelera |
+| `elimination_manager_device` | Gestor de eliminaciones |
+| `conditional_button_device` | Botón condicional |
+| `item_granter_device` | Otorgador de objetos |
+| `creative_prop` | Objeto / Prop |
+| `map_indicator_device` | Indicador de mapa |
+| `vfx_creator_device` | Creador de VFX |
+| *(player spawn pad)* | Plataforma de aparición de jugador |
+| *(island settings)* | Ajustes de la isla |
+
+> Els noms poden variar una mica segons la versió d'UEFN; cerca per aquestes
+> paraules clau.
+
+## Apèndix C — Persistència
+
+L'estança (`stash_data`) i el progrés de temporada (`season_data`) es guarden amb
+`weak_map` persistable. Es veuen bé en una **illa publicada**; en proves locals
+(*Iniciar sesión*) l'estat es pot reiniciar cada sessió — és normal. Per veure la
+persistència real entre partides, **publica en privat**.
+
+## Playbook visual
+
+Per a un checklist interactiu d'una sola pàgina (caselles que es desen al
+navegador, imprimible), obre **[`build-playbook.html`](./build-playbook.html)**.
 
 ## Referència ràpida de la doc
 

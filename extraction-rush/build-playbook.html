@@ -1,0 +1,605 @@
+<title>Extraction Rush · Manual de muntatge UEFN</title>
+<style>
+  :root {
+    /* light palette — chosen cool teal-slate neutrals, salvage-amber accent */
+    --bg: #eef1f1;
+    --surface: #ffffff;
+    --surface-2: #e4e9e9;
+    --ink: #16211f;
+    --ink-soft: #52625f;
+    --ink-faint: #7d8d8a;
+    --line: #d3dad9;
+    --accent: #b06d0a;        /* salvage amber (darkened for light ground) */
+    --accent-ink: #7c4c05;
+    --accent-soft: #f6e8d0;
+    --teal: #0d6b62;          /* extract / safe */
+    --teal-soft: #d5e8e5;
+    --danger: #a8332b;        /* heat / risk */
+    --danger-soft: #f2dcd9;
+    --shadow: 0 1px 2px rgba(20,40,37,.06), 0 4px 16px rgba(20,40,37,.05);
+    --mono: ui-monospace, "SF Mono", "SFMono-Regular", "Menlo", "Cascadia Mono", "Roboto Mono", monospace;
+    --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0c1413;
+      --surface: #131f1d;
+      --surface-2: #1a2825;
+      --ink: #e7edeb;
+      --ink-soft: #a2b2ae;
+      --ink-faint: #6f817d;
+      --line: #263733;
+      --accent: #e8a23d;
+      --accent-ink: #f2c079;
+      --accent-soft: #2a2012;
+      --teal: #43bcab;
+      --teal-soft: #12302c;
+      --danger: #e28168;
+      --danger-soft: #331a15;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.28);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0c1413;
+    --surface: #131f1d;
+    --surface-2: #1a2825;
+    --ink: #e7edeb;
+    --ink-soft: #a2b2ae;
+    --ink-faint: #6f817d;
+    --line: #263733;
+    --accent: #e8a23d;
+    --accent-ink: #f2c079;
+    --accent-soft: #2a2012;
+    --teal: #43bcab;
+    --teal-soft: #12302c;
+    --danger: #e28168;
+    --danger-soft: #331a15;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 6px 20px rgba(0,0,0,.28);
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.55;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; padding: clamp(20px, 4vw, 48px) clamp(16px, 4vw, 40px) 80px; }
+
+  /* ---- Masthead ---- */
+  .mast { border-bottom: 2px solid var(--ink); padding-bottom: 20px; margin-bottom: 8px; }
+  .kicker {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .kicker .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  h1 {
+    font-size: clamp(30px, 6vw, 52px);
+    line-height: 1.02;
+    letter-spacing: -.02em;
+    margin: 14px 0 10px;
+    text-wrap: balance;
+    font-weight: 800;
+  }
+  .lede { font-size: clamp(16px, 2.2vw, 19px); color: var(--ink-soft); max-width: 62ch; margin: 0; }
+  .lede b { color: var(--ink); font-weight: 600; }
+
+  /* ---- Legend / meta ---- */
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 20px 0 4px; font-size: 13px; color: var(--ink-soft); }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 12px; }
+  .swatch { width: 11px; height: 11px; border-radius: 3px; }
+  .swatch.core { background: var(--accent); }
+  .swatch.star { background: var(--teal); }
+  .swatch.evo { background: var(--danger); }
+
+  /* ---- Phase rail ---- */
+  .rail { display: flex; gap: 0; margin: 30px 0 40px; flex-wrap: wrap; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--surface); box-shadow: var(--shadow); }
+  .rail a { flex: 1 1 120px; text-decoration: none; color: var(--ink); padding: 13px 14px; border-right: 1px solid var(--line); transition: background .15s; min-width: 0; }
+  .rail a:last-child { border-right: 0; }
+  .rail a:hover { background: var(--surface-2); }
+  .rail .n { font-family: var(--mono); font-size: 11px; color: var(--ink-faint); letter-spacing: .1em; }
+  .rail .t { display: block; font-weight: 650; font-size: 14px; margin-top: 3px; line-height: 1.2; }
+  .rail a.hot { background: var(--accent-soft); }
+  .rail a.hot .t { color: var(--accent-ink); }
+
+  /* ---- Phase blocks ---- */
+  .phase { margin: 0 0 44px; scroll-margin-top: 18px; }
+  .phase > header { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+  .phase > header .pn {
+    font-family: var(--mono); font-weight: 700; font-size: 13px;
+    color: var(--surface); background: var(--ink);
+    padding: 3px 9px; border-radius: 6px; letter-spacing: .05em; flex: none;
+  }
+  .phase.v0 > header .pn { background: var(--accent); color: #1a1206; }
+  .phase > header h2 { font-size: clamp(20px, 3.2vw, 26px); margin: 0; letter-spacing: -.01em; font-weight: 750; }
+  .phase > header .tag { margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--ink-faint); white-space: nowrap; align-self: center; }
+  .phase .sub { color: var(--ink-soft); margin: 2px 0 18px; max-width: 68ch; }
+  .phase.v0 { border: 1px solid var(--accent); border-radius: 16px; padding: 22px clamp(16px,3vw,26px) 6px; background: linear-gradient(180deg, var(--accent-soft), transparent 120px); }
+
+  /* ---- Steps ---- */
+  ol.steps { list-style: none; counter-reset: s; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+  ol.steps > li { counter-increment: s; position: relative; padding: 10px 6px 10px 42px; border-bottom: 1px solid var(--line); }
+  ol.steps > li:last-child { border-bottom: 0; }
+  ol.steps > li::before {
+    content: counter(s); position: absolute; left: 0; top: 9px;
+    font-family: var(--mono); font-size: 12px; font-weight: 700;
+    width: 26px; height: 26px; display: grid; place-items: center;
+    color: var(--accent-ink); background: var(--accent-soft); border-radius: 50%;
+  }
+  ol.steps > li .h { font-weight: 640; }
+  ol.steps > li .d { color: var(--ink-soft); font-size: 14.5px; }
+  kbd { font-family: var(--mono); font-size: .85em; background: var(--surface-2); border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 5px; padding: 1px 6px; color: var(--ink); white-space: nowrap; }
+  code.path { font-family: var(--mono); font-size: .9em; color: var(--accent-ink); background: var(--accent-soft); padding: 1px 6px; border-radius: 5px; }
+
+  /* ---- Wiring cards ---- */
+  .wire-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin: 6px 0 4px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); overflow: hidden; }
+  .card > .ch { display: flex; align-items: center; gap: 8px; padding: 11px 14px; border-bottom: 1px solid var(--line); background: var(--surface-2); }
+  .card > .ch .name { font-family: var(--mono); font-weight: 700; font-size: 13.5px; }
+  .card > .ch .kind { margin-left: auto; font-family: var(--mono); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--surface); padding: 2px 7px; border-radius: 20px; }
+  .kind.core { background: var(--accent); color:#1a1206; }
+  .kind.star { background: var(--teal); }
+  .kind.evo { background: var(--danger); }
+  .rows { padding: 6px 6px; }
+  .row { display: flex; align-items: flex-start; gap: 9px; padding: 6px 8px; border-radius: 7px; }
+  .row:hover { background: var(--surface-2); }
+  .row input { appearance: none; -webkit-appearance: none; margin: 3px 0 0; flex: none; width: 16px; height: 16px; border: 1.5px solid var(--ink-faint); border-radius: 4px; cursor: pointer; position: relative; background: var(--surface); }
+  .row input:checked { background: var(--teal); border-color: var(--teal); }
+  .row input:checked::after { content: "✓"; position: absolute; inset: 0; display: grid; place-items: center; color: #fff; font-size: 11px; font-weight: 900; }
+  .row input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .row label { font-size: 13.5px; cursor: pointer; line-height: 1.4; }
+  .row .f { font-family: var(--mono); font-weight: 600; color: var(--ink); }
+  .row .arrow { color: var(--ink-faint); padding: 0 3px; }
+  .row .to { color: var(--ink-soft); }
+  .row .val { font-family: var(--mono); color: var(--teal); font-weight: 600; }
+  .row input:checked ~ label { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--ink-faint); }
+  .row input:checked ~ label .f, .row input:checked ~ label .val, .row input:checked ~ label .to { color: var(--ink-faint); }
+
+  /* ---- Callout ---- */
+  .note { border-left: 3px solid var(--accent); background: var(--accent-soft); color: var(--accent-ink); padding: 12px 16px; border-radius: 0 10px 10px 0; margin: 16px 0; font-size: 14.5px; }
+  .note.warn { border-color: var(--danger); background: var(--danger-soft); color: var(--danger); }
+  .note.safe { border-color: var(--teal); background: var(--teal-soft); color: var(--teal); }
+  .note b { font-weight: 700; }
+  .note code { font-family: var(--mono); font-size: .88em; }
+
+  .placewrap { display:flex; flex-wrap:wrap; gap:7px; margin: 4px 0 8px; }
+  .chip { font-family: var(--mono); font-size: 12px; padding: 4px 10px; border-radius: 20px; background: var(--surface-2); border: 1px solid var(--line); color: var(--ink-soft); }
+  .chip b { color: var(--ink); font-weight: 700; }
+
+  h3.mini { font-size: 13px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-faint); font-family: var(--mono); margin: 20px 0 8px; font-weight: 600; }
+
+  footer { margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--ink-faint); font-size: 13px; font-family: var(--mono); display:flex; flex-wrap:wrap; gap: 6px 16px; justify-content: space-between; }
+
+  .toolbar { display:flex; gap:10px; align-items:center; margin: 18px 0 0; flex-wrap: wrap; }
+  .btn { font: inherit; font-size: 13px; font-family: var(--mono); cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--ink); padding: 7px 14px; border-radius: 8px; box-shadow: var(--shadow); }
+  .btn:hover { background: var(--surface-2); }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .prog { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); }
+  .prog b { color: var(--teal); }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+  html { scroll-behavior: smooth; }
+
+  @media print {
+    body { background: #fff; color: #000; font-size: 11px; }
+    .rail, .toolbar, footer .noprint { display: none; }
+    .card, .phase.v0 { box-shadow: none; break-inside: avoid; }
+    .phase { break-inside: avoid-page; }
+    a { color: #000; text-decoration: none; }
+  }
+</style>
+
+<div class="wrap">
+  <header class="mast">
+    <div class="kicker"><span class="dot"></span> Extraction Rush · Manual de camp <span style="color:var(--ink-faint)">— muntatge a UEFN</span></div>
+    <h1>Del repo a un mapa jugable.</h1>
+    <p class="lede">Seqüència completa per muntar <b>Extraction Rush</b> a UEFN, <b>sense res per establert</b> i amb els termes de menú en <b>castellà</b>: des dels fonaments (terra, aparicions, ajustos) fins a <b>col·locar i cablejar cada dispositiu</b>. Segueix les fases en ordre — la <b>Fase 1</b> ja deixa una ronda jugable. Si et perds en algun clic, consulta la <a href="#ops" style="color:var(--accent-ink)">Guia · Operar UEFN</a>. Marca cada casella; es desa al navegador.</p>
+
+    <div class="legend">
+      <span><i class="swatch core"></i> Nucli de la ronda</span>
+      <span><i class="swatch star"></i> Fonament (del Naufragi)</span>
+      <span><i class="swatch evo"></i> Evolució v2</span>
+    </div>
+    <div class="toolbar">
+      <button class="btn" id="print">⎙ Imprimir / PDF</button>
+      <button class="btn" id="reset">↺ Reiniciar caselles</button>
+      <span class="prog" id="prog">0 / 0 fets</span>
+    </div>
+  </header>
+
+  <nav class="rail" aria-label="Fases">
+    <a href="#f0"><span class="n">FASE 0</span><span class="t">Fonaments</span></a>
+    <a href="#ops"><span class="n">GUIA</span><span class="t">Operar UEFN</span></a>
+    <a href="#f1" class="hot"><span class="n">FASE 1</span><span class="t">Mínim jugable (v0)</span></a>
+    <a href="#f2"><span class="n">FASE 2</span><span class="t">Leaderboard</span></a>
+    <a href="#f3"><span class="n">FASE 3</span><span class="t">Heat</span></a>
+    <a href="#f4"><span class="n">FASE 4</span><span class="t">Bosses de botí</span></a>
+    <a href="#f5"><span class="n">FASE 5</span><span class="t">Balises + Botiga</span></a>
+  </nav>
+
+  <!-- FASE 0 -->
+  <section class="phase" id="f0">
+    <header><span class="pn">F0</span><h2>Fonaments — res per establert</h2><span class="tag">~30 min</span></header>
+    <p class="sub">UEFN genera el món (mapa i binaris); tu hi poses el Verse i els <b>fonaments obligatoris</b> que el Verse NO crea. Termes de menú en <b>castellà</b> entre parèntesis.</p>
+    <ol class="steps">
+      <li><span class="h">Requisits previs.</span> <span class="d">Compte d'Epic Games, <b>Fortnite</b> i <b>UEFN</b> instal·lats des de l'Epic Games Launcher, i sessió iniciada a UEFN. Per <b>provar en local</b> no cal ser "creador"; només caldrà per publicar.</span></li>
+      <li><span class="h">Crea el projecte.</span> <span class="d">UEFN → <kbd>Proyecto nuevo</kbd> (New Project). Tria la plantilla <b>Isla básica</b> / <i>Grid</i> — ja porta <b>terra</b>, <b>Ajustes de la isla</b> i <b>plataformes d'aparició</b>. (Evita <i>En blanco</i> si ets principiant: te'ls deixa a faltar.) Anomena'l <code class="path">ExtractionRush</code>.</span></li>
+      <li><span class="h">Verifica els 3 fonaments obligatoris.</span> <span class="d">Al panell <kbd>Esquema</kbd> (Outliner, dalt a la dreta) confirma que hi ha: <b>1)</b> terra sòlid; <b>2)</b> un <b>Ajustes de la isla</b> (Island Settings); <b>3)</b> almenys <b>4–8 «Plataforma de aparición de jugador»</b> (Player Spawn Pad). Si en falta cap, mira la <a href="#ops" style="color:var(--accent-ink)">Guia · Operar UEFN</a> per afegir-los.</span></li>
+      <li><span class="h">Copia el Verse.</span> <span class="d">Tanca UEFN. Copia <b>tots</b> els <code class="path">.verse</code> de <code class="path">extraction-rush/Content/</code> dins <code class="path">Documentos/Fortnite Projects/ExtractionRush/Content/</code>.</span></li>
+      <li><span class="h">Reobre i compila.</span> <span class="d">Obre el projecte → <kbd>Ventana ▸ Explorador de Verse</kbd> (Verse Explorer) → botó <kbd>Compilar</kbd> / <kbd>Build Verse Code</kbd> (<kbd>Ctrl+Maj+B</kbd>).</span></li>
+      <li><span class="h">Comprova els 14 dispositius.</span> <span class="d">Al <kbd>Cajón de contenido</kbd> (Content Drawer, a baix) cada <code class="path">.verse</code> amb <code>class(creative_device)</code> apareix com a dispositiu. <b>Són 14.</b> <code class="path">shared_state.verse</code> no surt — és codi compartit, no es col·loca.</span></li>
+    </ol>
+    <div class="note warn"><b>El que és fàcil oblidar (i deixa el mapa trencat):</b> les <b>Plataformes d'aparició</b> (sense elles ningú apareix), el <b>terra</b> (o tothom cau al buit) i els <b>Ajustes de la isla</b>. Cap dels scripts els crea.</div>
+    <div class="note warn"><b>Si la compilació falla:</b> el nucli i el fonament estan calcats de codi que ja compila (sol ser una coma/indentació). Els 4 sistemes <b>v2</b> toquen APIs que potser cal ajustar a la teva versió — si un peta, comenta'l i munta primer la Fase 1.</div>
+  </section>
+
+  <!-- GUIA: operar UEFN -->
+  <section class="phase" id="ops">
+    <header><span class="pn">↳</span><h2>Guia · Operar UEFN sense assumir res</h2><span class="tag">consulta quan calgui</span></header>
+    <p class="sub">Les tres accions que faràs una i altra vegada, pas a pas, i els noms dels dispositius en castellà per trobar-los al teu navegador.</p>
+
+    <div class="wire-grid">
+      <div class="card">
+        <div class="ch"><span class="name">Col·locar un dispositiu</span></div>
+        <div class="rows" style="padding:12px 16px; font-size:14px; color:var(--ink-soft); line-height:1.6">
+          1. Obre el <b>Cajón de contenido</b> (Content Drawer, tecla <kbd>Ctrl+Espai</kbd>).<br>
+          2. Cerca el nom (natius: pestanya de dispositius; els teus scripts: carpeta del projecte).<br>
+          3. <b>Arrossega'l</b> al visor 3D. Ja està col·locat.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><span class="name">Cablejar un camp (referència)</span></div>
+        <div class="rows" style="padding:12px 16px; font-size:14px; color:var(--ink-soft); line-height:1.6">
+          1. <b>Selecciona</b> el dispositiu Verse al visor.<br>
+          2. Panell <b>Detalles</b> (Details, a la dreta).<br>
+          3. Busca el camp (p. ex. <span class="row" style="display:inline"><span class="f">Timer</span></span>).<br>
+          4. Obre el <b>desplegable</b> del camp i tria el dispositiu de destí de la llista — o fes clic a la <b>comptagotes</b> i després clic al dispositiu al visor.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><span class="name">Omplir una llista <code style="font-size:12px">[]</code></span></div>
+        <div class="rows" style="padding:12px 16px; font-size:14px; color:var(--ink-soft); line-height:1.6">
+          Camps com <span class="f" style="font-family:var(--mono)">CommonSpawners</span> són llistes:<br>
+          1. Al camp, clic a <b>«+»</b> per afegir un element (índex 0).<br>
+          2. Assigna'l com una referència normal.<br>
+          3. Repeteix <b>«+»</b> per cada dispositiu de la llista.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><span class="name">Omplir un generador d'objectes</span></div>
+        <div class="rows" style="padding:12px 16px; font-size:14px; color:var(--ink-soft); line-height:1.6">
+          Els <b>Generador de objetos</b> venen <b>buits</b>:<br>
+          1. Selecciona'l → <b>Detalles</b>.<br>
+          2. Al camp d'objecte, tria una arma/consumible del navegador.<br>
+          Sense això, l'spawner no dona res.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><span class="name">Afegir plataformes d'aparició</span></div>
+        <div class="rows" style="padding:12px 16px; font-size:14px; color:var(--ink-soft); line-height:1.6">
+          Cerca <b>«Plataforma de aparición de jugador»</b> i arrossega'n <b>4–8</b> repartides pel mapa (zona segura / lobby). Són obligatòries.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><span class="name">Provar el mapa</span></div>
+        <div class="rows" style="padding:12px 16px; font-size:14px; color:var(--ink-soft); line-height:1.6">
+          Botó <b>Iniciar sesión</b> (Launch Session) a la barra superior. S'obre el Fortnite amb el teu mapa. Per convidar amics: <b>Publicar ▸ Publicar en privado</b>.
+        </div>
+      </div>
+    </div>
+
+    <h3 class="mini">Noms dels dispositius · Verse → Castellà</h3>
+    <div class="wire-grid">
+      <div class="card"><div class="rows" style="padding:10px 14px; font-size:13px; line-height:1.9; font-family:var(--mono); color:var(--ink-soft)">
+        storm_controller → <b style="color:var(--ink)">Controlador de tormenta</b><br>
+        mutator_zone → <b style="color:var(--ink)">Zona de mutación</b><br>
+        item_spawner → <b style="color:var(--ink)">Generador de objetos</b><br>
+        capture_area → <b style="color:var(--ink)">Zona de captura</b><br>
+        trigger → <b style="color:var(--ink)">Desencadenador</b><br>
+        hud_message → <b style="color:var(--ink)">Mensajes de HUD</b>
+      </div></div>
+      <div class="card"><div class="rows" style="padding:10px 14px; font-size:13px; line-height:1.9; font-family:var(--mono); color:var(--ink-soft)">
+        leaderboard → <b style="color:var(--ink)">Tabla de clasificación</b><br>
+        billboard → <b style="color:var(--ink)">Cartelera</b><br>
+        elimination_manager → <b style="color:var(--ink)">Gestor de eliminaciones</b><br>
+        conditional_button → <b style="color:var(--ink)">Botón condicional</b><br>
+        item_granter → <b style="color:var(--ink)">Otorgador de objetos</b><br>
+        creative_prop → <b style="color:var(--ink)">Objeto / Prop</b>
+      </div></div>
+      <div class="card"><div class="rows" style="padding:10px 14px; font-size:13px; line-height:1.9; font-family:var(--mono); color:var(--ink-soft)">
+        map_indicator → <b style="color:var(--ink)">Indicador de mapa</b><br>
+        vfx_creator → <b style="color:var(--ink)">Creador de VFX</b><br>
+        player spawn pad → <b style="color:var(--ink)">Plataforma de aparición</b><br>
+        island settings → <b style="color:var(--ink)">Ajustes de la isla</b><br>
+        <span style="color:var(--ink-faint)">(els noms poden variar una mica</span><br>
+        <span style="color:var(--ink-faint)">segons la versió — cerca per aquestes paraules)</span>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- FASE 1 -->
+  <section class="phase v0" id="f1">
+    <header><span class="pn">F1</span><h2>Mínim jugable · v0</h2><span class="tag">el bucle complet</span></header>
+    <p class="sub">Munta <b>només</b> el nucli i tindràs la ronda <b>deploy → loot → extreu → estança</b> funcionant. Deixa l'evolució per a les fases següents.</p>
+
+    <h3 class="mini">1 · Col·loca els dispositius de lògica</h3>
+    <p class="sub" style="margin-bottom:10px">En una plataforma apartada (no cal que sigui accessible). Un de cada:</p>
+    <div class="placewrap">
+      <span class="chip"><b>game_manager</b></span>
+      <span class="chip"><b>raid_timer</b></span>
+      <span class="chip"><b>zone_manager</b></span>
+      <span class="chip"><b>loot_manager</b></span>
+      <span class="chip"><b>extraction_controller</b></span>
+      <span class="chip"><b>inventory_manager</b></span>
+      <span class="chip"><b>mission_manager</b></span>
+      <span class="chip"><b>run_value_hud</b></span>
+      <span class="chip"><b>sea_reset_manager</b></span>
+    </div>
+
+    <h3 class="mini">2 · Col·loca els dispositius natius mínims</h3>
+    <div class="placewrap">
+      <span class="chip"><b>1×</b> storm_controller</span>
+      <span class="chip"><b>3×</b> mutator_zone</span>
+      <span class="chip"><b>~8×</b> item_spawner</span>
+      <span class="chip"><b>1×</b> capture_area <span style="color:var(--ink-faint)">(1 extracció per començar)</span></span>
+      <span class="chip"><b>1×</b> leaderboard</span>
+      <span class="chip"><b>1×</b> trigger <span style="color:var(--ink-faint)">(mar)</span></span>
+      <span class="chip"><b>2–3×</b> hud_message <span style="color:var(--ink-faint)">(reutilitzables)</span></span>
+    </div>
+
+    <h3 class="mini">3 · Cableja els <code style="text-transform:none;font-size:13px">@editable</code> (Details de cada dispositiu)</h3>
+    <div class="wire-grid">
+
+      <div class="card">
+        <div class="ch"><span class="name">game_manager</span><span class="kind core">nucli</span></div>
+        <div class="rows">
+          <div class="row"><input type="checkbox"><label><span class="f">Timer</span><span class="arrow">→</span><span class="to">raid_timer</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">Zones</span><span class="arrow">→</span><span class="to">zone_manager</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">Loot</span><span class="arrow">→</span><span class="to">loot_manager</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">Extraction</span><span class="arrow">→</span><span class="to">extraction_controller</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">CountdownHUD</span><span class="arrow">→</span><span class="to">hud_message</span></label></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><span class="name">raid_timer</span><span class="kind core">nucli</span></div>
+        <div class="rows">
+          <div class="row"><input type="checkbox"><label><span class="f">TimerHUD</span><span class="arrow">→</span><span class="to">hud_message</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">PhaseHUD</span><span class="arrow">→</span><span class="to">hud_message</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">RoundDurationSeconds</span> = <span class="val">480</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">DeployEndSeconds</span> = <span class="val">20</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">ClosingStartSeconds</span> = <span class="val">300</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">FinalStartSeconds</span> = <span class="val">420</span></label></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><span class="name">zone_manager</span><span class="kind core">nucli</span></div>
+        <div class="rows">
+          <div class="row"><input type="checkbox"><label><span class="f">Storm</span><span class="arrow">→</span><span class="to">storm_controller</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">OuterRingZone</span><span class="arrow">→</span><span class="to">mutator (Ravals)</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">MidRingZone</span><span class="arrow">→</span><span class="to">mutator (Centre)</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">VaultZone</span><span class="arrow">→</span><span class="to">mutator (Bòveda)</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">StormHUD</span><span class="arrow">→</span><span class="to">hud_message</span></label></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><span class="name">loot_manager</span><span class="kind core">nucli</span></div>
+        <div class="rows">
+          <div class="row"><input type="checkbox"><label><span class="f">CommonSpawners</span><span class="arrow">→</span><span class="to">[spawners Zona 1]</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">RareSpawners</span><span class="arrow">→</span><span class="to">[spawners Zona 2]</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">EpicSpawners</span><span class="arrow">→</span><span class="to">[spawners Zona 3]</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">VaultRewardSpawner</span><span class="arrow">→</span><span class="to">item_spawner</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">RestockAtSeconds</span> = <span class="val">180</span></label></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><span class="name">extraction_controller</span><span class="kind core">nucli</span></div>
+        <div class="rows">
+          <div class="row"><input type="checkbox"><label><span class="f">QuickArea1</span><span class="arrow">→</span><span class="to">capture_area</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">QuickArea2</span><span class="arrow">→</span><span class="to">capture_area <span style="color:var(--ink-faint)">(o repeteix 1)</span></span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">CentralArea</span><span class="arrow">→</span><span class="to">capture_area</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">ExtractHUD</span><span class="arrow">→</span><span class="to">hud_message</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">Inventory</span><span class="arrow">→</span><span class="to">inventory_manager</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">Missions</span><span class="arrow">→</span><span class="to">mission_manager</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">ChannelSeconds</span> = <span class="val">8</span></label></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><span class="name">inventory_manager</span><span class="kind core">nucli</span></div>
+        <div class="rows">
+          <div class="row"><input type="checkbox"><label><span class="f">ValueHUD</span><span class="arrow">→</span><span class="to">hud_message</span></label></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><span class="name">mission_manager</span><span class="kind core">nucli</span></div>
+        <div class="rows">
+          <div class="row"><input type="checkbox"><label><span class="f">MissionHUD</span><span class="arrow">→</span><span class="to">hud_message</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">ValueLeaderboard</span><span class="arrow">→</span><span class="to">leaderboard</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">XPPerLevel</span> = <span class="val">1000</span></label></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><span class="name">sea_reset_manager</span><span class="kind star">★</span></div>
+        <div class="rows">
+          <div class="row"><input type="checkbox"><label><span class="f">SeaZone</span><span class="arrow">→</span><span class="to">trigger gran sota el mar</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">RespawnHeightOffset</span> = <span class="val">100</span></label></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><span class="name">run_value_hud</span><span class="kind star">★</span></div>
+        <div class="rows">
+          <div class="row"><input type="checkbox"><label><span class="to">Cap camp — mostra el valor 💠 en risc sol.</span></label></div>
+        </div>
+      </div>
+
+    </div>
+
+    <h3 class="mini">4 · Món mínim + playtest</h3>
+    <ol class="steps">
+      <li><span class="h">Terra i mar.</span> <span class="d">Un tros de terreny amb 3 sub-zones i mar al voltant. Posa el <b>trigger de <code>SeaZone</code></b> pla i ample <b>sota tot</b>.</span></li>
+      <li><span class="h">Reparteix loot i 1 extracció.</span> <span class="d">8 <b>item_spawner</b> amb armes/objectes; 1 <b>capture_area</b> com a punt d'extracció.</span></li>
+      <li><span class="h">Marca zones.</span> <span class="d">Un <b>mutator_zone</b> per anell (van als 3 camps de <code>zone_manager</code>).</span></li>
+      <li><span class="h">Llança sessió.</span> <span class="d"><kbd>Iniciar sesión</kbd> (Launch Session), barra superior. Comprova: apareixes en una plataforma, cau el temps, hi ha loot, l'extracció assegura valor i caure al mar et retorna.</span></li>
+    </ol>
+    <div class="note safe"><b>Si això funciona, tens el joc.</b> La resta són capes de tensió a sobre d'un bucle que ja roda.</div>
+    <div class="note"><b>Persistència:</b> l'estança i el leaderboard entre partides es veuen bé en una <b>illa publicada</b>. En proves locals (<code>Iniciar sesión</code>) l'estat es pot reiniciar cada cop — és normal. Per veure la persistència real, <b>Publicar ▸ Publicar en privado</b>.</div>
+  </section>
+
+  <!-- FASE 2 -->
+  <section class="phase" id="f2">
+    <header><span class="pn">F2</span><h2>Leaderboard d'estança</h2><span class="tag">★ del Naufragi</span></header>
+    <p class="sub">Rànquing d'operatius pel valor 💠 acumulat, en billboards al lobby.</p>
+    <div class="placewrap"><span class="chip">Col·loca <b>1×</b> extraction_leaderboard</span><span class="chip"><b>3–5×</b> billboard al lobby</span></div>
+    <div class="wire-grid">
+      <div class="card">
+        <div class="ch"><span class="name">extraction_leaderboard</span><span class="kind star">★</span></div>
+        <div class="rows">
+          <div class="row"><input type="checkbox"><label><span class="f">Leaderboards</span><span class="arrow">→</span><span class="to">[3–5 billboard]</span> <span style="color:var(--ink-faint)">index 0 = rang top</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">RefreshIntervalSeconds</span> = <span class="val">5</span></label></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FASE 3 -->
+  <section class="phase" id="f3">
+    <header><span class="pn">F3</span><h2>Heat — el valor et marca</h2><span class="tag">◆ evolució v2</span></header>
+    <p class="sub">Com més 💠 portes, més visible ets: avís propi → ping al mapa de tothom → rastre visible.</p>
+    <div class="placewrap"><span class="chip"><b>1×</b> heat_system</span><span class="chip"><b>~1 per jugador</b> map_indicator</span><span class="chip"><b>grapat</b> vfx_creator</span></div>
+    <div class="wire-grid">
+      <div class="card">
+        <div class="ch"><span class="name">heat_system</span><span class="kind evo">◆</span></div>
+        <div class="rows">
+          <div class="row"><input type="checkbox"><label><span class="f">WarmThreshold</span> = <span class="val">100</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">HotThreshold</span> = <span class="val">300</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">BlazingThreshold</span> = <span class="val">600</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">TickSeconds</span> = <span class="val">1</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">HeatHUD</span><span class="arrow">→</span><span class="to">hud_message</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">MapIndicators</span><span class="arrow">→</span><span class="to">[map_indicator]</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">BlazingVFX</span><span class="arrow">→</span><span class="to">[vfx_creator]</span></label></div>
+        </div>
+      </div>
+    </div>
+    <div class="note warn"><b>Prova de foc del v2:</b> aquí és on més probable és haver d'ajustar mètodes (<code>map_indicator</code>, <code>vfx_creator</code>). Si un no existeix a la teva versió, comenta la línia i deixa el ping via <code>HeatHUD</code>.</div>
+  </section>
+
+  <!-- FASE 4 -->
+  <section class="phase" id="f4">
+    <header><span class="pn">F4</span><h2>Bosses de botí</h2><span class="tag">◆ evolució v2</span></header>
+    <p class="sub">En morir deixes el botí al terra en una bossa; qui la recull te'l roba. Substitueix la mort "botí al buit". Aparella <b>BagProps[i]</b> amb <b>BagTriggers[i]</b>: col·loca cada prop amb el seu trigger, mateix ordre a les dues llistes.</p>
+    <div class="placewrap"><span class="chip"><b>1×</b> squad_manager</span><span class="chip"><b>1×</b> elimination_manager</span><span class="chip"><b>~6×</b> creative_prop (bossa)</span><span class="chip"><b>~6×</b> trigger</span></div>
+    <div class="wire-grid">
+      <div class="card">
+        <div class="ch"><span class="name">squad_manager</span><span class="kind evo">◆</span></div>
+        <div class="rows">
+          <div class="row"><input type="checkbox"><label><span class="f">EliminationManager</span><span class="arrow">→</span><span class="to">elimination_manager</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">BagProps</span><span class="arrow">→</span><span class="to">[~6 creative_prop]</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">BagTriggers</span><span class="arrow">→</span><span class="to">[~6 trigger]</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">BagHUD</span><span class="arrow">→</span><span class="to">hud_message</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">Inventory</span><span class="arrow">→</span><span class="to">inventory_manager</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">Missions</span><span class="arrow">→</span><span class="to">mission_manager</span></label></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FASE 5 -->
+  <section class="phase" id="f5">
+    <header><span class="pn">F5</span><h2>Balises + Botiga de loadout</h2><span class="tag">◆ evolució v2</span></header>
+    <p class="sub">Extraccions cridables que avisen tothom, i reinversió de l'estança abans de desplegar.</p>
+    <div class="placewrap">
+      <span class="chip"><b>1×</b> beacon_manager</span>
+      <span class="chip"><b>3×</b> capture_area (balises)</span>
+      <span class="chip"><b>3×</b> creative_prop (fum)</span>
+      <span class="chip"><b>1×</b> loadout_shop</span>
+      <span class="chip"><b>5×</b> conditional_button</span>
+      <span class="chip"><b>4×</b> item_granter</span>
+    </div>
+    <div class="wire-grid">
+      <div class="card">
+        <div class="ch"><span class="name">beacon_manager</span><span class="kind evo">◆</span></div>
+        <div class="rows">
+          <div class="row"><input type="checkbox"><label><span class="f">CallButton</span><span class="arrow">→</span><span class="to">conditional_button</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">BeaconAreas</span><span class="arrow">→</span><span class="to">[3 capture_area]</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">BeaconProps</span><span class="arrow">→</span><span class="to">[3 creative_prop]</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">BroadcastHUD</span><span class="arrow">→</span><span class="to">hud_message</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">BeaconDurationSeconds</span> = <span class="val">30</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">ChannelSeconds</span> = <span class="val">8</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">Inventory</span><span class="arrow">→</span><span class="to">inventory_manager</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">Missions</span><span class="arrow">→</span><span class="to">mission_manager</span></label></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><span class="name">loadout_shop</span><span class="kind evo">◆</span></div>
+        <div class="rows">
+          <div class="row"><input type="checkbox"><label><span class="f">Tier1</span> Button/Granter · <span class="val">300</span> <span style="color:var(--ink-faint)">Operatiu</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">Tier2</span> Button/Granter · <span class="val">1000</span> <span style="color:var(--ink-faint)">Veterà</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">Tier3</span> Button/Granter · <span class="val">3000</span> <span style="color:var(--ink-faint)">Fantasma</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">Insure</span> Button/Granter · <span class="val">500</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">ShopHUD</span><span class="arrow">→</span><span class="to">hud_message</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">Inventory</span><span class="arrow">→</span><span class="to">inventory_manager</span></label></div>
+        </div>
+      </div>
+    </div>
+    <div class="note"><b>Cada item_granter</b> es configura amb les armes/objectes del seu nivell — veure <code>docs/economy.md</code>.</div>
+  </section>
+
+  <footer>
+    <span>Extraction Rush · guia de muntatge</span>
+    <span class="noprint">Referència completa: <code>BUILD_SETUP.md</code> · <code>docs/</code></span>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    var KEY = "erush-build-v1";
+    var boxes = Array.prototype.slice.call(document.querySelectorAll('.row input[type=checkbox]'));
+    boxes.forEach(function (b, i) { b.dataset.k = "b" + i; });
+
+    var saved = {};
+    try { saved = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
+
+    function updateProg() {
+      var done = boxes.filter(function (b) { return b.checked; }).length;
+      document.getElementById('prog').innerHTML = '<b>' + done + '</b> / ' + boxes.length + ' fets';
+    }
+    boxes.forEach(function (b) {
+      if (saved[b.dataset.k]) b.checked = true;
+      b.addEventListener('change', function () {
+        saved[b.dataset.k] = b.checked;
+        try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+        updateProg();
+      });
+    });
+    updateProg();
+
+    document.getElementById('print').addEventListener('click', function () { window.print(); });
+    document.getElementById('reset').addEventListener('click', function () {
+      boxes.forEach(function (b) { b.checked = false; });
+      saved = {};
+      try { localStorage.removeItem(KEY); } catch (e) {}
+      updateProg();
+    });
+  })();
+</script>
