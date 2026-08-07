@@ -5,9 +5,12 @@ using { /Verse.org/Simulation }
 using { /UnrealEngine.com/Temporary/Diagnostics }
 
 # GameManager
-# Orquestra tots els sistemes d'EXTRACTION RUSH durant una ronda.
-# Reacciona als canvis de fase del RaidTimer per obrir extraccions i moure la tempesta,
-# i connecta les morts (perdre botí) amb l'inventari.
+# Orquestra els sistemes d'EXTRACTION RUSH durant una ronda: reacciona als
+# canvis de fase del RaidTimer per obrir extraccions i moure la tempesta.
+#
+# Nota (evolució v2): la gestió de morts ja NO viu aquí. La fa 'squad_manager'
+# (mort → bossa de botí robable), que s'autosubscriu a les eliminacions. Així
+# evitem processar la mateixa mort dues vegades.
 #
 # Estats: Waiting → Deploy → Raid → Closing → FinalExtraction → Ended
 
@@ -18,11 +21,6 @@ game_manager := class(creative_device):
     @editable Zones : zone_manager = zone_manager{}
     @editable Loot : loot_manager = loot_manager{}
     @editable Extraction : extraction_controller = extraction_controller{}
-    @editable Inventory : inventory_manager = inventory_manager{}
-    @editable Missions : mission_manager = mission_manager{}
-
-    # Gestor d'eliminacions (per detectar morts i perdre el botí de ronda)
-    @editable EliminationManager : elimination_manager_device = elimination_manager_device{}
 
     # HUD de compte enrere previ al deploy
     @editable CountdownHUD : hud_message_device = hud_message_device{}
@@ -34,10 +32,8 @@ game_manager := class(creative_device):
         Sleep(3.0)
         StartRound()
 
-        # Escoltar fases i morts en paral·lel durant tota la ronda
-        race:
-            PhaseLoop()
-            EliminationLoop()
+        # Reaccionar als canvis de fase durant tota la ronda.
+        PhaseLoop()
 
     # Inicia la ronda i genera el loot inicial
     StartRound() : void =
@@ -73,23 +69,6 @@ game_manager := class(creative_device):
                 Print("Fase: FI — ronda acabada")
                 Extraction.CloseAll()
                 EndRound()
-
-    # Escolta les eliminacions: qui mor perd tot el botí de la ronda,
-    # qui elimina rep XP.
-    EliminationLoop()<suspends> : void =
-        loop:
-            let Payload := EliminationManager.EliminatedEvent.Await()
-
-            # El jugador eliminat perd el botí de ronda
-            if (Victim := player[Payload.EliminatedCharacter.GetAgent[]]):
-                Inventory.LoseRunLoot(Victim)
-
-            # L'eliminador (si és jugador) rep XP
-            if:
-                InstigatorAgent := Payload.EliminatingCharacter?.GetAgent[]
-                Killer := player[InstigatorAgent]
-            then:
-                Missions.RegisterElimination(Killer)
 
     # Neteja de final de ronda
     EndRound() : void =

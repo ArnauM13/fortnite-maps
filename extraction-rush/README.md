@@ -37,33 +37,52 @@ Aquesta tensió "risc-recompensa" és el motor de retenció: els jugadors tornen
 - [x] Leaderboard de valor extret
 - [x] Solo / Duos / Trios
 
+### Evolució v2 (sistemes originals)
+
+- [x] **Heat** — el valor que portes et marca al mapa (risc visible)
+- [x] **Bosses de botí** — en morir deixes el botí al terra, robable
+- [x] **Abatut + reanimació** — salvament d'equip sota pressió
+- [x] **Balises d'extracció** — obre una sortida al teu lloc... i avisa tothom
+- [x] **Botiga de loadout + assegurança** — reinverteix l'estança a la ronda
+
 ## Estructura del projecte
 
 ```
 extraction-rush/
 ├── verse/               ← Scripts Verse (lògica del joc)
+│   │   # --- Nucli de la ronda ---
 │   ├── GameManager.verse           ← Orquestra estats de la ronda
 │   ├── RaidTimer.verse             ← Timer de la ronda + fases
 │   ├── ZoneManager.verse           ← Nivells de perill/loot per zona
 │   ├── LootManager.verse           ← Spawns de loot per nivell
 │   ├── ExtractionController.verse  ← Punts d'extracció rotatius
-│   ├── shared_state.verse          ← Estat compartit persistent (★ del Naufragi)
+│   │   # --- Fonament reutilitzat del Naufragi (★) ---
+│   ├── shared_state.verse          ← Estat compartit persistent
 │   ├── InventoryManager.verse      ← Botí de ronda + estança persistent
 │   ├── MissionManager.verse        ← Missions diàries + XP de temporada
-│   ├── extraction_leaderboard.verse← Rànquing de valor (★ del Naufragi)
-│   ├── run_value_hud.verse         ← Valor 💠 en risc en pantalla (★ del Naufragi)
-│   └── sea_reset_manager.verse     ← Reset en caure al mar (★ del Naufragi)
+│   ├── extraction_leaderboard.verse← Rànquing de valor
+│   ├── run_value_hud.verse         ← Valor 💠 en risc en pantalla
+│   ├── sea_reset_manager.verse     ← Reset en caure al mar
+│   │   # --- EVOLUCIÓ v2: sistemes originals (◆) ---
+│   ├── heat_system.verse           ← El valor et marca al mapa (Heat)
+│   ├── squad_manager.verse         ← Morts → bosses de botí robables + reanimació
+│   ├── beacon_manager.verse        ← Balises d'extracció cridables i públiques
+│   └── loadout_shop.verse          ← Botiga de loadout + assegurança
 ├── docs/                ← Documentació i disseny
 │   ├── design.md
 │   ├── zones.md
 │   ├── economy.md
-│   └── reused-devices.md ← Mapatge de què s'ha copiat del Naufragi
+│   ├── reused-devices.md ← Què s'ha copiat del Naufragi (★)
+│   └── evolution.md      ← La tesi de l'evolució v2 (◆)
 └── assets/
     └── references/      ← Imatges de referència visual
 ```
 
-> ★ = dispositiu copiat i adaptat del mapa **OnlyUp Naufragi** (`../OnlyUp_naufrago/`),
-> que ja és funcional i compilat. Detalls a [`docs/reused-devices.md`](./docs/reused-devices.md).
+> ★ = fonament copiat i adaptat del mapa **OnlyUp Naufragi** (`../OnlyUp_naufrago/`).
+> Detalls a [`docs/reused-devices.md`](./docs/reused-devices.md).
+>
+> ◆ = **evolució v2**, sistemes propis i nous (no copiats de cap mapa) que
+> distingeixen Extraction Rush. Tesi de disseny a [`docs/evolution.md`](./docs/evolution.md).
 
 ## Tecnologia
 
