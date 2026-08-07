@@ -42,20 +42,28 @@ Aquesta tensió "risc-recompensa" és el motor de retenció: els jugadors tornen
 ```
 extraction-rush/
 ├── verse/               ← Scripts Verse (lògica del joc)
-│   ├── GameManager.verse         ← Orquestra estats de la ronda
-│   ├── RaidTimer.verse           ← Timer de la ronda + fases
-│   ├── ZoneManager.verse         ← Nivells de perill/loot per zona
-│   ├── LootManager.verse         ← Spawns de loot per nivell
-│   ├── ExtractionController.verse← Punts d'extracció rotatius
-│   ├── InventoryManager.verse    ← Botí persistent (estança)
-│   └── MissionManager.verse      ← Missions diàries + XP
+│   ├── GameManager.verse           ← Orquestra estats de la ronda
+│   ├── RaidTimer.verse             ← Timer de la ronda + fases
+│   ├── ZoneManager.verse           ← Nivells de perill/loot per zona
+│   ├── LootManager.verse           ← Spawns de loot per nivell
+│   ├── ExtractionController.verse  ← Punts d'extracció rotatius
+│   ├── shared_state.verse          ← Estat compartit persistent (★ del Naufragi)
+│   ├── InventoryManager.verse      ← Botí de ronda + estança persistent
+│   ├── MissionManager.verse        ← Missions diàries + XP de temporada
+│   ├── extraction_leaderboard.verse← Rànquing de valor (★ del Naufragi)
+│   ├── run_value_hud.verse         ← Valor 💠 en risc en pantalla (★ del Naufragi)
+│   └── sea_reset_manager.verse     ← Reset en caure al mar (★ del Naufragi)
 ├── docs/                ← Documentació i disseny
 │   ├── design.md
 │   ├── zones.md
-│   └── economy.md
+│   ├── economy.md
+│   └── reused-devices.md ← Mapatge de què s'ha copiat del Naufragi
 └── assets/
     └── references/      ← Imatges de referència visual
 ```
+
+> ★ = dispositiu copiat i adaptat del mapa **OnlyUp Naufragi** (`../OnlyUp_naufrago/`),
+> que ja és funcional i compilat. Detalls a [`docs/reused-devices.md`](./docs/reused-devices.md).
 
 ## Tecnologia
 

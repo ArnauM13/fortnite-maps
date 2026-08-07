@@ -5,28 +5,25 @@ using { /Verse.org/Simulation }
 using { /UnrealEngine.com/Temporary/Diagnostics }
 
 # MissionManager
-# Gestiona les missions diàries i l'XP de temporada.
-# Dona XP encara que el jugador mori (anti-frustració) i registra el progrés
-# persistent per la barra de nivell de temporada.
-
-# Progrés persistent de temporada del jugador
-season_progress := class<final><persistable>:
-    XP : int = 0
-    Level : int = 1
-
-# Mapa persistent de progrés per jugador
-var SeasonMap : weak_map(player, season_progress) = map{}
+# Missions diàries i XP de temporada. El progrés persistent viu a l'estat
+# compartit (season_data / SeasonMap a shared_state.verse), gestionat amb el
+# mateix patró que les estadístiques del Naufragi. Dona XP encara que el
+# jugador mori (anti-frustració).
 
 mission_manager := class(creative_device):
 
-    # HUD per notificar missions completades i XP guanyada
+    # HUD per notificar missions completades i pujades de nivell.
     @editable MissionHUD : hud_message_device = hud_message_device{}
 
-    # Leaderboard de valor extret (per ronda o acumulat)
+    # Leaderboard natiu de UEFN per al valor extret per ronda (opcional;
+    # el rànquing persistent d'estança es mostra amb extraction_leaderboard.verse).
     @editable ValueLeaderboard : leaderboard_device = leaderboard_device{}
 
-    # XP necessària per pujar de nivell
+    # XP necessària per pujar de nivell.
     @editable XPPerLevel : int = 1000
+
+    # Helper compartit sobre les taules de mòdul.
+    State : extraction_state = extraction_state{}
 
     # --- Recompenses d'XP per acció (veure docs/economy.md) ---
     XP_Extraction : int = 200
@@ -34,53 +31,35 @@ mission_manager := class(creative_device):
     XP_EnterVault : int = 250
     XP_Elimination : int = 200
 
-    # Registra una extracció exitosa i atorga XP (+ bonus si és d'alt valor)
+    OnBegin<override>()<suspends>:void=
+        State.InitializeAll(GetPlayspace().GetPlayers())
+        GetPlayspace().PlayerAddedEvent().Subscribe(OnPlayerJoin)
+
+    OnPlayerJoin(Agent:agent):void=
+        if (Player := player[Agent]):
+            State.InitializePlayer(Player)
+
+    # Extracció exitosa → XP base (+ bonus si és d'alt valor) i registre al leaderboard.
     RegisterExtraction(Player : player, ValueExtracted : int) : void =
         GrantXP(Player, XP_Extraction)
         if (ValueExtracted >= 500):
             GrantXP(Player, XP_HighValueExtraction)
             Print("Missió: Extracció d'alt valor! +{XP_HighValueExtraction} XP extra")
-
-        # Registrar el valor al leaderboard
         ValueLeaderboard.SubmitEvent(Player, ValueExtracted)
 
-    # Registra l'entrada a La Bòveda (Zona 3)
-    RegisterVaultEntry(Player : player) : void =
-        GrantXP(Player, XP_EnterVault)
+    RegisterVaultEntry(Player : player) : void = GrantXP(Player, XP_EnterVault)
+    RegisterElimination(Player : player) : void = GrantXP(Player, XP_Elimination)
 
-    # Registra una eliminació PvP
-    RegisterElimination(Player : player) : void =
-        GrantXP(Player, XP_Elimination)
-
-    # Atorga XP i comprova si el jugador puja de nivell
+    # Atorga XP via l'estat compartit i detecta pujada de nivell.
     GrantXP(Player : player, Amount : int) : void =
-        let PrevXP : int = if (P := SeasonMap[Player]) then P.XP else 0
-        let PrevLevel : int = if (P := SeasonMap[Player]) then P.Level else 1
-        let NewXP : int = PrevXP + Amount
-        let NewLevel : int = 1 + (NewXP / XPPerLevel)
-
-        set SeasonMap[Player] = season_progress:
-            XP := NewXP
-            Level := NewLevel
-
-        Print("Missió: +{Amount} XP (total {NewXP}, nivell {NewLevel})")
-
+        PrevLevel := State.GetLevel(Player)
+        NewLevel := State.GrantXP(Player, Amount, XPPerLevel)
+        Print("Missió: +{Amount} XP (nivell {NewLevel})")
         if (NewLevel > PrevLevel):
             OnLevelUp(Player, NewLevel)
 
-    # Executat quan el jugador puja de nivell de temporada
     OnLevelUp(Player : player, NewLevel : int) : void =
         Print("Missió: NIVELL {NewLevel} assolit! Recompensa desbloquejada")
-        if (Agent := player[Player]):
-            MissionHUD.Show(Agent)
+        MissionHUD.Show(Player)
 
-    # Consultes de progrés
-    GetXP(Player : player) : int =
-        if (P := SeasonMap[Player]):
-            return P.XP
-        return 0
-
-    GetLevel(Player : player) : int =
-        if (P := SeasonMap[Player]):
-            return P.Level
-        return 1
+    GetLevel(Player : player) : int = State.GetLevel(Player)
