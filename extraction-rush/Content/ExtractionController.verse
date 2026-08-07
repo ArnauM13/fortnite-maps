@@ -69,7 +69,7 @@ extraction_controller := class(creative_device):
     # Escolta una àrea: quan un jugador la captura del tot, s'extreu
     ListenArea(Area : capture_area_device, PointName : string)<suspends> : void =
         loop:
-            let Agent := Area.AgentEntersEvent.Await()
+            Agent := Area.AgentEntersEvent.Await()
             Print("Extracció: jugador entra a {PointName} — canalitzant {ChannelSeconds}s")
             # La captura completa es resol amb la capture_area configurada a UEFN;
             # aquí escoltem l'esdeveniment de captura completada.
@@ -80,7 +80,7 @@ extraction_controller := class(creative_device):
         Print("Extracció EXITOSA a {PointName}")
         if (ExtractingPlayer := player[Agent]):
             # Confirmar (persistir) el botí que portava a l'estança
-            let ValueExtracted : int = Inventory.CommitRunLoot(ExtractingPlayer)
+            ValueExtracted : int = Inventory.CommitRunLoot(ExtractingPlayer)
             Missions.RegisterExtraction(ExtractingPlayer, ValueExtracted)
             ExtractHUD.Show(Agent)
             Print("Extracció: {ValueExtracted} valor assegurat")

@@ -45,7 +45,7 @@ game_manager := class(creative_device):
     # Reacciona a cada canvi de fase del RaidTimer
     PhaseLoop()<suspends> : void =
         loop:
-            let Phase := Timer.PhaseChangedEvent.Await()
+            Phase := Timer.PhaseChangedEvent.Await()
             OnPhaseChanged(Phase)
             if (Phase = raid_phase.Ended):
                 break

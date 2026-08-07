@@ -58,11 +58,11 @@ raid_timer := class(creative_device):
 
     # Retorna el temps restant formatat "MM:SS"
     GetFormattedRemaining() : string =
-        let Remaining : int = GetRemainingSeconds()
-        let Minutes : int = Remaining / 60
-        let Seconds : int = Remaining - (Minutes * 60)
-        let MinStr : string = if (Minutes < 10) then "0{Minutes}" else "{Minutes}"
-        let SecStr : string = if (Seconds < 10) then "0{Seconds}" else "{Seconds}"
+        Remaining : int = GetRemainingSeconds()
+        Minutes : int = Remaining / 60
+        Seconds : int = Remaining - (Minutes * 60)
+        MinStr : string = if (Minutes < 10) then "0{Minutes}" else "{Minutes}"
+        SecStr : string = if (Seconds < 10) then "0{Seconds}" else "{Seconds}"
         return "{MinStr}:{SecStr}"
 
     # Bucle principal: cada segon actualitza el temps i comprova canvis de fase
