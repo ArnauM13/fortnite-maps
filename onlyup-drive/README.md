@@ -55,6 +55,7 @@ Per no ser tan brutal com un Only Up pur (i seguir la tendència actual d'access
 - [x] Capa temàtica **Street Takeover** (tuner meet nocturn, underglow, nitro, drift)
 - [x] **Progressió "+1" (El Garatge)**: degoteig constant + Nivell de Conductor (temps/fites) + arbre de millores incrementals (velocitat, diners, imant...) + prestigi
 - [x] **Hub d'enganxada**: 5 leaderboards mostrats + taulell de missions (diàries/setmanals/carrera) + recompenses per temps de sessió i login
+- [x] **Leaderboard en pantalla** (HUD viu d'alçada durant la cursa) + recordatori de like + **botiga privada** per jugador (cosmètics persistents)
 - [x] Nitro pads (jump/boost) i molls (tires) com a impuls
 - [x] Grind rails (tanques de seguretat) per velocitat
 - [x] Cotxes mòbils com a plataformes amb timing
@@ -78,6 +79,7 @@ onlyup-drive/
 │   ├── retention.md              ← ★ sistemes de retenció i rejugabilitat
 │   ├── vehicles-and-theme.md     ← ★ capa Street Takeover + catàleg i rols de vehicles
 │   ├── progression.md            ← ★ sistema "+1": degoteig, Nivell de Conductor i El Garatge
+│   ├── engagement-devices.md     ← ★ HUD leaderboard en pantalla, recordatori de like, botiga privada
 │   ├── publishing.md             ← noms, tipologia/tags i concepte de miniatura
 │   ├── thumbnail-concept.svg     ← maqueta visual de la miniatura (outrun)
 │   └── hub-mockup.svg            ← maqueta de layout del hub d'spawn (leaderboards/garatge/missions)
@@ -92,6 +94,9 @@ onlyup-drive/
     ├── DriverLevel.verse            ← Nivell de Conductor (XP per temps + fites)
     ├── GarageUpgrades.verse         ← arbre de millores incrementals "+1"
     ├── SessionRewards.verse         ← recompenses per temps de sessió
+    ├── LiveLeaderboardHUD.verse     ← rànquing d'alçada en pantalla (HUD viu)
+    ├── LikePrompt.verse             ← recordatori de like (sense recompensa, per política)
+    ├── PrivateShop.verse            ← botiga privada per jugador (cosmètics KM)
     ├── FallResetManager.verse       ← reset en caure al buit del fons
     ├── VehicleManager.verse         ← vehicles conduïbles (spawn, cim, joyride)
     ├── TimerDisplay.verse           ← timer en pantalla

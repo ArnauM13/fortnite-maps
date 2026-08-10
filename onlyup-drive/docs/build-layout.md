@@ -379,6 +379,37 @@ Munta un **hub a l'spawn** (i replica un panell al cim) amb tot ben visible. Veu
 
 ---
 
+## 17. Dispositius d'engagement (pantalla, like, botiga privada)
+
+Detall i avisos a `engagement-devices.md`.
+
+### Leaderboard en pantalla — `live_leaderboard_hud`
+| `@editable` | Assigna |
+|-------------|---------|
+| `Heights` | el `height_tracker` |
+| `Line1/2/3 + YourLine` | 4 `hud_message` ancorats a pantalla (cantonada) |
+| `RefreshSeconds` | 3 |
+
+### Recordatori de like — `like_prompt`
+| `@editable` | Assigna |
+|-------------|---------|
+| `PromptHUD` | `hud_message` amb el text del recordatori |
+| `HappyTriggers[]` | triggers de moments alts (cim, nou rècord) |
+| `PeriodicSeconds` | 0 (o un valor alt si vols recordatori suau) |
+
+> ❗ Mai donis recompensa per fer like (política d'Epic). Només recordatori.
+
+### Botiga privada — `private_shop` (al garatge del hub)
+| `@editable` | Assigna |
+|-------------|---------|
+| `Meta` | el `meta_progress` |
+| `Buy…` | un `button_device` per article (rastre, skin, cotxe, emote) |
+| `Feedback` | `hud_message` |
+
+> Compres persistents **per jugador**; l'efecte cosmètic s'activa només per a qui compra.
+
+---
+
 ## 12. Post-process i ambient (l'estètica outrun + tuner)
 
 - `post_process_device`: bloom alt, saturació +, grain lleuger, tint magenta/taronja. **Imprescindible.**
