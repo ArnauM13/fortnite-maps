@@ -6,6 +6,29 @@ Llegenda viabilitat: 🟢 fàcil · 🟡 mitjà · 🔴 requereix més Verse/tre
 
 ---
 
+## 0. El Hub d'enganxada (què veu el jugador que l'empeny a seguir)
+
+Perquè tots aquests sistemes funcionin, han de ser **visibles dins del mapa**, no amagats. Munta un **hub a l'spawn** (i replica'n un panell al cim) amb tres superfícies:
+
+### A) Leaderboards mostrats (`billboard_device` / `leaderboard`)
+Una paret de rècords a l'spawn amb **5 carteleres** costat a costat: 🏔️ Alçada · ⏱️ Temps · 🪙 Fitxes · 🔥 Ratxa · 😇 Purs. Veure't al rànquing (o just a sota del següent) és el millor motor de "una altra".
+- Extra: una cartelera **«El teu perfil»** amb Nivell de Conductor, títol i KM (de `driver_level` / `meta_progress`).
+
+### B) Taulell de missions (3 capes)
+Un mur amb objectius vius i el seu progrés:
+- **Diàries** (roten 24h) — 3 reptes ràpids (`daily_challenge_manager`).
+- **Setmanals** (roten 7 dies) — 3 reptes més grossos (més KM). Ex: "arriba al cim 3 cops", "recull 200 fitxes en total", "completa 5 diàries".
+- **De carrera** (permanents, una sola vegada) — la llista d'accolades/fites (primer clear, tots els secrets, sub-8…). Sempre hi ha alguna cosa pendent.
+
+### C) Degoteig de recompenses per temps
+- **Per sessió** (`session_rewards`): +KM als 5/10/15/20/30/45/60 min → "queda't una mica més".
+- **Login diari:** primera escalada del dia +20 KM; **ratxa de dies** amb premi creixent (dia 7 = premi gros).
+- **Nivell de Conductor:** cada nivell (temps + fites) → +1 Punt de Garatge + KM (`driver_level`).
+
+> Aquestes tres superfícies + el degoteig "+1" (veure `progression.md`) són el que converteix "he acabat el mapa" en "què més puc treure avui".
+
+---
+
 ## 1. Reptes diaris (🟢🟡) — el motor #1 de retorn
 
 3 reptes que **roten cada 24 h**. Donen KM 🏁 i es poden fer en qualsevol escalada.

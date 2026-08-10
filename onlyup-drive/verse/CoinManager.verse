@@ -15,6 +15,10 @@ coin_manager := class(creative_device):
     @editable SecretCoins : []trigger_device = array{}     # valor 5
     @editable CoinHUD : hud_message_device = hud_message_device{}
     @editable StreakHUD : hud_message_device = hud_message_device{}
+    # Progressió "+1" (opcionals): multiplicador de guanys i XP de nivell.
+    @editable Garage : garage_upgrades = garage_upgrades{}
+    @editable Level : driver_level = driver_level{}
+    @editable UseProgression : logic = true
 
     StandardValue : int = 1
     RiskValue : int = 3
@@ -45,10 +49,15 @@ coin_manager := class(creative_device):
             Coin.Disable()
 
     Collect(Agent : agent, Value : int, IsSecret : logic) : void =
-        Awarded := (Value * GetStreak(Agent)) / 100
+        # Valor base × ratxa × multiplicador de garatge (Turbo-caixa/prestigi).
+        EarnMult := if (UseProgression?, P := player[Agent]) then Garage.GetEarnMultiplier(P) else 100
+        Awarded := (Value * GetStreak(Agent) * EarnMult) / 10000
         Current := GetBalance(Agent)
         if (set Balances[Agent] = Current + Awarded):
             CoinHUD.Show(Agent)
+        # Degoteig "+1" de XP de conductor per cada moneda.
+        if (UseProgression?, P := player[Agent]):
+            Level.AddXP(P, 1)
         if (IsSecret?):
             SC := GetSecrets(Agent)
             if (set SecretsFound[Agent] = SC + 1):

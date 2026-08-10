@@ -317,6 +317,68 @@ L'efecte real de cada potenciador es cabla amb el dispositiu corresponent (jump 
 
 ---
 
+## 15. Garatge i Nivell de Conductor (progressió "+1")
+
+> La capa idle/roguelite: degoteig de recompenses + nivell per temps/fites + arbre de millores. Detall a `progression.md`. Munta-ho al **hub d'spawn** (i replica un panell al cim).
+
+### Dispositius de lògica (afegeix-los al bloc amagat)
+- `driver_level` — XP i nivells.
+- `garage_upgrades` — arbre de millores + 7 `button_device` (un per node) al garatge.
+
+### Cablejat a `driver_level`
+
+| `@editable` | Assigna |
+|-------------|---------|
+| `Meta` | el `meta_progress` |
+| `LevelHUD` | `hud_message` de nivell/títol |
+| `XPTickSeconds` | 10 |
+| `KMPerLevel` | 15 |
+
+### Cablejat a `garage_upgrades`
+
+| `@editable` | Assigna |
+|-------------|---------|
+| `Level` | el `driver_level` |
+| `Buy…` (×7) | 7 botons: Motor/Nitro/Suspensió/Dipòsit/Imant/TurboCaixa/Prestigi |
+| `Feedback` | `hud_message` |
+
+### Enllaços als sistemes existents (ja previstos als scripts)
+- `coin_manager` → camps `Garage`, `Level`, `UseProgression` (aplica multiplicador + XP per moneda).
+- `height_tracker` → camp `Level` (XP per secció).
+- `game_manager` → camp `Level` (XP al cim).
+- **Imant/velocitat/descompte:** aplica els getters del garatge al dispositiu real (mutator de velocitat per jugador, radi de recollida, cost de checkpoint). Els getters ja existeixen a `garage_upgrades.verse`.
+
+### Leaderboards nets (integritat)
+- Afegeix una **Cartelera «Garatge»** (permet millores) i mantingues la de **temps/alçada** com a **Net** (ignora millores de conducció). Opció «Sortida Neta» abans de la run (veure `progression.md`).
+
+---
+
+## 16. El Hub d'enganxada (spawn) — leaderboards, missions i temps
+
+Munta un **hub a l'spawn** (i replica un panell al cim) amb tot ben visible. Veure `retention.md §0`.
+
+### Mur de leaderboards (5 carteleres una al costat de l'altra)
+- 🏔️ Alçada · ⏱️ Temps · 🪙 Fitxes · 🔥 Ratxa · 😇 Purs → `leaderboard_manager` + carteleres.
+- Cartelera «El teu perfil» (Nivell + títol + KM) → llegeix `driver_level` i `meta_progress`.
+
+### Taulell de missions
+- **Diàries** → `daily_challenge_manager` (ja el tens).
+- **Setmanals** → un 2n `daily_challenge_manager` amb objectius més grossos i rotació 7 dies (o amplia el Verse).
+- **De carrera** → panell estàtic amb les accolades (fites d'una vegada).
+
+### Recompenses per temps
+- Col·loca `session_rewards` al bloc de lògica. Cablejat:
+
+| `@editable` | Assigna |
+|-------------|---------|
+| `Meta` | el `meta_progress` |
+| `RewardHUD` | `hud_message` d'avís de recompensa |
+| `CheckInterval` | 60 |
+
+- **Login diari** i **ratxa de dies:** gestiona-ho amb `meta_progress` (marca la data de l'última escalada) o un dispositiu de recompensa diària.
+
+---
+
 ## 12. Post-process i ambient (l'estètica outrun + tuner)
 
 - `post_process_device`: bloom alt, saturació +, grain lleuger, tint magenta/taronja. **Imprescindible.**

@@ -467,6 +467,43 @@
       </div>
     </div>
     <div class="note"><b>MVP de retenció al llançament:</b> meta_progress (KM + alçada), leaderboards d'alçada i temps, hub del cim, accolades. Reptes diaris i modificadors setmanals → primers updates (cada update = raó per tornar).</div>
+
+    <h3 class="mini">Progressió "+1" · El Garatge (degoteig, nivell, millores)</h3>
+    <p class="sub" style="margin-bottom:8px">La capa idle que fa sumar sempre alguna cosa. Detall a <code class="path">docs/progression.md</code>. Col·loca <b>driver_level</b>, <b>garage_upgrades</b> i <b>session_rewards</b> al bloc de lògica.</p>
+    <div class="wire-grid">
+      <div class="card">
+        <div class="ch"><span class="name">driver_level</span><span class="kind eco">+1</span></div>
+        <div class="rows">
+          <div class="row"><input type="checkbox"><label><span class="f">Meta</span><span class="arrow">→</span><span class="to">meta_progress</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">LevelHUD</span><span class="arrow">→</span><span class="to">hud (nivell/títol)</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="to">Cabla <span class="f">Level</span> a coin_manager, height_tracker i game_manager</span></label></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ch"><span class="name">garage_upgrades</span><span class="kind eco">+1</span></div>
+        <div class="rows">
+          <div class="row"><input type="checkbox"><label><span class="f">Level</span><span class="arrow">→</span><span class="to">driver_level</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">Buy… (×7)</span><span class="arrow">→</span><span class="to">7 botons del garatge</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="to">Aplica getters (velocitat/imant/descompte) als dispositius reals</span></label></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ch"><span class="name">session_rewards</span><span class="kind eco">temps</span></div>
+        <div class="rows">
+          <div class="row"><input type="checkbox"><label><span class="f">Meta</span><span class="arrow">→</span><span class="to">meta_progress</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">RewardHUD</span><span class="arrow">→</span><span class="to">hud_message</span></label></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ch"><span class="name">Hub d'spawn ✅</span><span class="kind eco">mostrar</span></div>
+        <div class="rows">
+          <div class="row"><input type="checkbox"><label><span class="to">Mur de <b>5 leaderboards</b> + cartelera de perfil</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="to">Taulell de <b>missions</b> (diàries/setmanals/carrera)</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="to">Panell de recompenses per <b>temps</b> i login</span></label></div>
+        </div>
+      </div>
+    </div>
+    <div class="note warn"><b>Integritat dels rècords:</b> les millores de <b>conducció</b> (Motor/Nitro/Suspensió) tenen topall i NO compten al leaderboard <b>Net</b>. Afegeix un board «Garatge» a part i el toggle «Sortida Neta». Veure <code>progression.md</code>.</div>
   </section>
 
   <!-- ============ FASE 5 ============ -->

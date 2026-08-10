@@ -53,6 +53,8 @@ Per no ser tan brutal com un Only Up pur (i seguir la tendència actual d'access
 - [x] Reptes diaris + modificadors setmanals + meta-progressió (cosmètics)
 - [x] **Molts vehicles**: plataformes mòbils/fixes, decoració de quedada i conduïbles
 - [x] Capa temàtica **Street Takeover** (tuner meet nocturn, underglow, nitro, drift)
+- [x] **Progressió "+1" (El Garatge)**: degoteig constant + Nivell de Conductor (temps/fites) + arbre de millores incrementals (velocitat, diners, imant...) + prestigi
+- [x] **Hub d'enganxada**: 5 leaderboards mostrats + taulell de missions (diàries/setmanals/carrera) + recompenses per temps de sessió i login
 - [x] Nitro pads (jump/boost) i molls (tires) com a impuls
 - [x] Grind rails (tanques de seguretat) per velocitat
 - [x] Cotxes mòbils com a plataformes amb timing
@@ -75,6 +77,7 @@ onlyup-drive/
 │   ├── economy.md                ← ★ economia de fitxes + KM (fonts, sortides, balanceig)
 │   ├── retention.md              ← ★ sistemes de retenció i rejugabilitat
 │   ├── vehicles-and-theme.md     ← ★ capa Street Takeover + catàleg i rols de vehicles
+│   ├── progression.md            ← ★ sistema "+1": degoteig, Nivell de Conductor i El Garatge
 │   ├── publishing.md             ← noms, tipologia/tags i concepte de miniatura
 │   └── thumbnail-concept.svg     ← maqueta visual de la miniatura (outrun)
 └── verse/                        ← scripts Verse (esquelet, es compilen a UEFN)
@@ -85,6 +88,9 @@ onlyup-drive/
     ├── ConsumableShop.verse         ← potenciadors d'un sol ús
     ├── MetaProgress.verse           ← KM persistents + botiga del hub
     ├── DailyChallengeManager.verse  ← reptes diaris rotatius
+    ├── DriverLevel.verse            ← Nivell de Conductor (XP per temps + fites)
+    ├── GarageUpgrades.verse         ← arbre de millores incrementals "+1"
+    ├── SessionRewards.verse         ← recompenses per temps de sessió
     ├── FallResetManager.verse       ← reset en caure al buit del fons
     ├── VehicleManager.verse         ← vehicles conduïbles (spawn, cim, joyride)
     ├── TimerDisplay.verse           ← timer en pantalla

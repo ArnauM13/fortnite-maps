@@ -16,6 +16,8 @@ game_manager := class(creative_device):
     @editable Leaderboard : leaderboard_manager = leaderboard_manager{}
     @editable Meta : meta_progress = meta_progress{}
     @editable Daily : daily_challenge_manager = daily_challenge_manager{}
+    @editable Level : driver_level = driver_level{}
+    @editable SummitXP : int = 100
     @editable FinishTrigger : trigger_device = trigger_device{}
     @editable WelcomeHUD : hud_message_device = hud_message_device{}
     @editable StartDelay : float = 2.0
@@ -54,6 +56,7 @@ game_manager := class(creative_device):
         BoughtCP := Checkpoints.GetPurchased(Player) >= 0
         AllCoins := Coins.GetBalance(Player) >= TotalCoinsInMap
         Meta.AwardEndOfRun(Player, FinalHeight, true, BoughtCP, AllCoins, FinalTime)
+        Level.AddXP(Player, SummitXP)
         if (not BoughtCP?):
             Daily.ReportProgress(Player, challenge_kind.PureClear, 1)
         Daily.ReportProgress(Player, challenge_kind.SpeedClear, FinalTime)
