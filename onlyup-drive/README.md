@@ -79,7 +79,8 @@ onlyup-drive/
 │   ├── vehicles-and-theme.md     ← ★ capa Street Takeover + catàleg i rols de vehicles
 │   ├── progression.md            ← ★ sistema "+1": degoteig, Nivell de Conductor i El Garatge
 │   ├── publishing.md             ← noms, tipologia/tags i concepte de miniatura
-│   └── thumbnail-concept.svg     ← maqueta visual de la miniatura (outrun)
+│   ├── thumbnail-concept.svg     ← maqueta visual de la miniatura (outrun)
+│   └── hub-mockup.svg            ← maqueta de layout del hub d'spawn (leaderboards/garatge/missions)
 └── verse/                        ← scripts Verse (esquelet, es compilen a UEFN)
     ├── GameManager.verse            ← orquestra estats de la partida
     ├── HeightTracker.verse          ← altitud, entrada de secció, bonus + ratxa
