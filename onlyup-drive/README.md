@@ -56,6 +56,7 @@ Per no ser tan brutal com un Only Up pur (i seguir la tendència actual d'access
 - [x] **Progressió "+1" (El Garatge)**: degoteig constant + Nivell de Conductor (temps/fites) + arbre de millores incrementals (velocitat, diners, imant...) + prestigi
 - [x] **Hub d'enganxada**: 5 leaderboards mostrats + taulell de missions (diàries/setmanals/carrera) + recompenses per temps de sessió i login
 - [x] **Leaderboard en pantalla** (HUD viu d'alçada durant la cursa) + recordatori de like + **botiga privada** per jugador (cosmètics persistents)
+- [x] **Fletxes indicadores** de neó que guien cap on anar (s'encenen per secció)
 - [x] Nitro pads (jump/boost) i molls (tires) com a impuls
 - [x] Grind rails (tanques de seguretat) per velocitat
 - [x] Cotxes mòbils com a plataformes amb timing
@@ -94,6 +95,7 @@ onlyup-drive/
     ├── DriverLevel.verse            ← Nivell de Conductor (XP per temps + fites)
     ├── GarageUpgrades.verse         ← arbre de millores incrementals "+1"
     ├── SessionRewards.verse         ← recompenses per temps de sessió
+    ├── PathArrow.verse              ← fletxes de neó que guien cap on anar
     ├── LiveLeaderboardHUD.verse     ← rànquing d'alçada en pantalla (HUD viu)
     ├── LikePrompt.verse             ← recordatori de like (sense recompensa, per política)
     ├── PrivateShop.verse            ← botiga privada per jugador (cosmètics KM)

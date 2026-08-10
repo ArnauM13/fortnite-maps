@@ -410,6 +410,21 @@ Detall i avisos a `engagement-devices.md`.
 
 ---
 
+## 18. Fletxa indicadora (guia de direcció) — `path_arrow`
+
+Col·loca **fletxes de neó cian** als punts on el camí no és obvi (bifurcacions, salts llargs, canvis de secció). El dispositiu encén només les de la secció actual (+ la següent) per no saturar.
+
+| `@editable` | Assigna |
+|-------------|---------|
+| `SectionTriggers[]` | "Sec1_Enter" … "Sec7_Enter" (en ordre) |
+| `ArrowSwitches[]` | 1 `trigger_device` interruptor per secció (co-situat amb les fletxes) |
+| `NextCheckpointMarker` | marcador/waypoint on-screen al proper CP (opcional) |
+| `ShowNextAndCurrent` | true (encén secció actual + següent) |
+
+> Cada "interruptor" és un `trigger_device` que fa `Enable()/Disable()` del grup de fletxes de la seva secció. Alternativa nativa: el marcador on-screen de Fortnite cap al següent objectiu.
+
+---
+
 ## 12. Post-process i ambient (l'estètica outrun + tuner)
 
 - `post_process_device`: bloom alt, saturació +, grain lleuger, tint magenta/taronja. **Imprescindible.**

@@ -337,6 +337,20 @@
         </div>
       </div>
     </div>
+    <h3 class="mini">5 · Fletxa indicadora (guia "cap on anar")</h3>
+    <p class="sub" style="margin-bottom:8px">En un Only Up el jugador mai ha de dubtar la direcció. Col·loca <b>fletxes de neó cian</b> als punts confusos i el dispositiu <b>path_arrow</b> perquè només brillin les de la secció on ets (i la següent).</p>
+    <div class="wire-grid">
+      <div class="card">
+        <div class="ch"><span class="name">path_arrow</span><span class="kind core">guia</span></div>
+        <div class="rows">
+          <div class="row"><input type="checkbox"><label><span class="f">SectionTriggers[]</span><span class="arrow">→</span><span class="to">Sec1..Sec7_Enter (en ordre)</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">ArrowSwitches[]</span><span class="arrow">→</span><span class="to">1 interruptor de fletxes per secció</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">NextCheckpointMarker</span><span class="arrow">→</span><span class="to">marcador al proper CP (opcional)</span></label></div>
+        </div>
+      </div>
+    </div>
+    <div class="note">Cada "interruptor" és un <kbd>Activador</kbd> co-situat amb les fletxes de neó de la seva secció (Enable/Disable les encén/apaga). Alternativa: el marcador/waypoint on-screen de Fortnite cap al proper checkpoint.</div>
+
     <div class="note safe"><b>Fita de la Fase 1:</b> prem <kbd>▶ Iniciar sesión</kbd>, puja de baix a dalt, cau expressament al buit i comprova que et retorna a l'spawn, i arriba al CIM per veure el leaderboard. Si això funciona, ja tens un <b>Only Up jugable</b>.</div>
   </section>
 
@@ -504,6 +518,34 @@
       </div>
     </div>
     <div class="note warn"><b>Integritat dels rècords:</b> les millores de <b>conducció</b> (Motor/Nitro/Suspensió) tenen topall i NO compten al leaderboard <b>Net</b>. Afegeix un board «Garatge» a part i el toggle «Sortida Neta». Veure <code>progression.md</code>.</div>
+
+    <h3 class="mini">Dispositius d'engagement (pantalla, like, botiga privada)</h3>
+    <p class="sub" style="margin-bottom:8px">Detall a <code class="path">docs/engagement-devices.md</code>.</p>
+    <div class="wire-grid">
+      <div class="card">
+        <div class="ch"><span class="name">live_leaderboard_hud</span><span class="kind eco">pantalla</span></div>
+        <div class="rows">
+          <div class="row"><input type="checkbox"><label><span class="f">Heights</span><span class="arrow">→</span><span class="to">height_tracker</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">Line1/2/3 + YourLine</span><span class="arrow">→</span><span class="to">4 hud_message (cantonada)</span></label></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ch"><span class="name">private_shop</span><span class="kind eco">botiga</span></div>
+        <div class="rows">
+          <div class="row"><input type="checkbox"><label><span class="f">Meta</span><span class="arrow">→</span><span class="to">meta_progress</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">Buy… (×5)</span><span class="arrow">→</span><span class="to">botons (rastre/skin/cotxe/emote)</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">Feedback</span><span class="arrow">→</span><span class="to">hud_message</span></label></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="ch"><span class="name">like_prompt</span><span class="kind eco">like</span></div>
+        <div class="rows">
+          <div class="row"><input type="checkbox"><label><span class="f">PromptHUD</span><span class="arrow">→</span><span class="to">hud_message del recordatori</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">HappyTriggers[]</span><span class="arrow">→</span><span class="to">cim, nou rècord</span></label></div>
+        </div>
+      </div>
+    </div>
+    <div class="note warn"><b>Like (política d'Epic):</b> NO es pot detectar ni <b>recompensar</b> el like. <code>like_prompt</code> només mostra un recordatori amable; mai hi posis premi.</div>
   </section>
 
   <!-- ============ FASE 5 ============ -->
