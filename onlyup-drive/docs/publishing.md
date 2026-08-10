@@ -46,8 +46,9 @@ cotxes apilats, ponts trencats, autocinemes de neó i nusos
 d'autopista fins al cim.
 
 ⚠️ Sense dany de caiguda... però cada error et fa lliscar avall.
-🪙 Recull monedes i compra checkpoints — o fes-ho a pèl (mode pur).
-🏁 Rècord d'alçada i contrarellotge al leaderboard.
+🪙 Recull fitxes i compra checkpoints — o fes-ho a pèl (mode pur).
+📅 Reptes diaris, modificadors setmanals i cosmètics de neó per desbloquejar.
+🏁 5 leaderboards: alçada, temps, fitxes, ratxa i clears purs.
 🎧 100% estètica synthwave / outrun.
 
 Només hi ha una direcció: AMUNT.

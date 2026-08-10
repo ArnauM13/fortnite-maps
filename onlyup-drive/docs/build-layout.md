@@ -192,21 +192,42 @@ A cada estació (§1) col·loca aquest conjunt:
 
 ---
 
-## 9. Monedes (col·leccionables)
+## 9. Monedes (col·leccionables tipades)
 
-Per cada moneda:
-- `item_spawner_device` amb un prop de moneda (o `conditional_button_device` invisible amb prop groc).
-- En agafar-la → event a `CoinManager.verse` (+1).
+Hi ha 4 tipus de moneda (valor i quantitat a `economy.md`). Fes servir un color de prop per tipus:
+- **Estàndard** (groc, valor 1) · **Risc** (vermell, valor 3, en llocs exposats)
+- **Mòbil** (taronja, valor 2, sobre cotxes/discos) · **Secreta** (verd, valor 5, amagada)
+
+Per cada moneda: `trigger_device` (o botó invisible) sobre el prop; en agafar-la → `CoinManager.verse`.
 
 **Cablejat a `CoinManager.verse`:**
 
 | `@editable` | Assigna |
 |-------------|---------|
-| `CoinTriggers[]` | tots els triggers/botons de moneda |
-| `CoinHUD` | `hud_message_device` o `billboard_device` del comptador |
-| `CoinsPerPickup` | 1 |
+| `StandardCoins[]` | tots els triggers de moneda estàndard |
+| `RiskCoins[]` | monedes de risc |
+| `MovingCoins[]` | monedes sobre plataformes mòbils |
+| `SecretCoins[]` | monedes secretes |
+| `CoinHUD` | comptador de fitxes |
+| `StreakHUD` | indicador de ratxa (x1 → x2) |
 
-Reparteix ~63 monedes: 5/10/12/14/12/10/0 per secció (§zones.md).
+Distribució (§economy.md): 40 estàndard / 10 risc / 8 mòbils / 5 secretes = **63**.
+
+## 9-bis. Potenciadors, KM i reptes (retenció)
+
+**Botiga de potenciadors** (`ConsumableShop.verse`) — 4 `button_device` a les estacions:
+
+| `@editable` | Assigna |
+|-------------|---------|
+| `BuyNitro` / `BuyHover` / `BuyMagnet` / `BuyRewind` | els 4 botons |
+| `Coins` | el `coin_manager` |
+| `Feedback` | `hud_message_device` |
+
+L'efecte real de cada potenciador es cabla amb el dispositiu corresponent (jump pad ocult, teleporter de rebobinat, etc.).
+
+**Meta-progressió persistent** (`MetaProgress.verse`) — càlcul de KM en acabar + botiga del hub (cosmètics). Cabla `KMHUD`. Els cosmètics (rastres, skins de cotxe, emotes) es connecten al hub d'spawn.
+
+**Reptes diaris** (`DailyChallengeManager.verse`) — cabla `Meta`, `Coins`, `Heights`, `ChallengeHUD` i tria els 3 reptes actius (`ActiveA/B/C` + `TargetA/B/C`). La rotació diària es fa canviant aquests valors (o amb lògica de data al UEFN).
 
 ---
 
@@ -237,7 +258,9 @@ Reparteix ~63 monedes: 5/10/12/14/12/10/0 per secció (§zones.md).
 |-------------|---------|
 | `SectionTriggers[]` | "Sec1_Enter" … "Sec7_Enter" en ordre |
 | `HeightHUD` | `billboard_device`/`hud_message_device` |
-| `SectionNames[]` | noms de secció (opcional) |
+| `Coins` | el `coin_manager` (bonus de secció + ratxa) |
+| `Daily` | el `daily_challenge_manager` (repte "arriba a secció N") |
+| `SectionCoinBonus` | 3 |
 
 **Cablejat a `GameManager.verse`:**
 
@@ -249,8 +272,11 @@ Reparteix ~63 monedes: 5/10/12/14/12/10/0 per secció (§zones.md).
 | `FallReset` | el `fall_reset_manager` |
 | `Timer` | el `timer_display` |
 | `Leaderboard` | el `leaderboard_manager` |
+| `Meta` | el `meta_progress` |
+| `Daily` | el `daily_challenge_manager` |
 | `FinishTrigger` | el trigger "FINISH" @ 4380 |
 | `WelcomeHUD` | `hud_message_device` de benvinguda |
+| `TotalCoinsInMap` | 63 (per a l'accolade "totes les monedes") |
 
 ---
 

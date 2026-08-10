@@ -11,6 +11,7 @@ fall_reset_manager := class(creative_device):
 
     @editable VoidVolume : trigger_device = trigger_device{}
     @editable Checkpoints : checkpoint_manager = checkpoint_manager{}
+    @editable Coins : coin_manager = coin_manager{}
     @editable SpawnTeleporter : teleporter_device = teleporter_device{}
     @editable ResetFeedback : hud_message_device = hud_message_device{}
 
@@ -21,6 +22,8 @@ fall_reset_manager := class(creative_device):
                 ResetPlayer(Agent)
 
     ResetPlayer(Agent : agent) : void =
+        # Caure trenca la ratxa "sense caure".
+        Coins.ResetStreak(Agent)
         # Primer prova de deixar-lo al seu checkpoint; si no en té, a l'spawn.
         if (Checkpoints.RespawnAtLast(Agent)):
             ResetFeedback.Show(Agent)

@@ -45,8 +45,12 @@ Per no ser tan brutal com un Only Up pur (i seguir la tendència actual d'access
 
 - [x] Only Up: sense dany de caiguda, la caiguda ÉS el càstig
 - [x] Reset per buit (caure al fons torna a l'últim checkpoint / spawn)
-- [x] Checkpoints **opcionals** comprables amb monedes
-- [x] Monedes col·leccionables (moneda + XP)
+- [x] Checkpoints **opcionals** comprables amb fitxes
+- [x] Economia de 2 capes: FITXES (⚡ per partida) + KM (🏁 persistents)
+- [x] Monedes tipades: estàndard / risc / mòbils / secretes
+- [x] Potenciadors d'un sol ús (nitro, hover, imant, rebobinar)
+- [x] Ratxa "sense caure" amb multiplicador de fitxes
+- [x] Reptes diaris + modificadors setmanals + meta-progressió (cosmètics)
 - [x] Nitro pads (jump/boost) i molls (tires) com a impuls
 - [x] Grind rails (tanques de seguretat) per velocitat
 - [x] Cotxes mòbils com a plataformes amb timing
@@ -65,16 +69,21 @@ onlyup-drive/
 │   ├── visual-design.md          ← guia visual (colors, materials, llum)
 │   ├── build-layout.md           ← ★ PLÀNOL PER MUNTAR-HO A UEFN (coords + peces + cablejat)
 │   ├── development-plan.md       ← pla per fases
+│   ├── economy.md                ← ★ economia de fitxes + KM (fonts, sortides, balanceig)
+│   ├── retention.md              ← ★ sistemes de retenció i rejugabilitat
 │   ├── publishing.md             ← noms, tipologia/tags i concepte de miniatura
 │   └── thumbnail-concept.svg     ← maqueta visual de la miniatura (outrun)
 └── verse/                        ← scripts Verse (esquelet, es compilen a UEFN)
-    ├── GameManager.verse         ← orquestra estats de la partida
-    ├── HeightTracker.verse       ← altitud, entrada de secció, millor alçada
-    ├── CheckpointManager.verse   ← checkpoints opcionals comprables + respawn
-    ├── CoinManager.verse         ← monedes → moneda del mapa
-    ├── FallResetManager.verse    ← reset en caure al buit del fons
-    ├── TimerDisplay.verse        ← timer en pantalla
-    └── LeaderboardManager.verse  ← rècord d'alçada i de temps
+    ├── GameManager.verse            ← orquestra estats de la partida
+    ├── HeightTracker.verse          ← altitud, entrada de secció, bonus + ratxa
+    ├── CheckpointManager.verse      ← checkpoints opcionals comprables + respawn
+    ├── CoinManager.verse            ← fitxes tipades + ratxa (multiplicador)
+    ├── ConsumableShop.verse         ← potenciadors d'un sol ús
+    ├── MetaProgress.verse           ← KM persistents + botiga del hub
+    ├── DailyChallengeManager.verse  ← reptes diaris rotatius
+    ├── FallResetManager.verse       ← reset en caure al buit del fons
+    ├── TimerDisplay.verse           ← timer en pantalla
+    └── LeaderboardManager.verse     ← rècords (alçada / temps / fitxes...)
 ```
 
 ## Com muntar-ho (resum)

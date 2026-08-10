@@ -14,9 +14,12 @@ game_manager := class(creative_device):
     @editable FallReset : fall_reset_manager = fall_reset_manager{}
     @editable Timer : timer_display = timer_display{}
     @editable Leaderboard : leaderboard_manager = leaderboard_manager{}
+    @editable Meta : meta_progress = meta_progress{}
+    @editable Daily : daily_challenge_manager = daily_challenge_manager{}
     @editable FinishTrigger : trigger_device = trigger_device{}
     @editable WelcomeHUD : hud_message_device = hud_message_device{}
     @editable StartDelay : float = 2.0
+    @editable TotalCoinsInMap : int = 63
 
     var GameState : int = 0
 
@@ -46,6 +49,15 @@ game_manager := class(creative_device):
         FinalHeight : int = Heights.GetBestHeight()
         Leaderboard.SaveTime(FinalTime, Player)
         Leaderboard.SaveHeight(FinalHeight, Player)
+
+        # Meta-progressió persistent (KM) i reptes diaris.
+        BoughtCP := Checkpoints.GetPurchased(Player) >= 0
+        AllCoins := Coins.GetBalance(Player) >= TotalCoinsInMap
+        Meta.AwardEndOfRun(Player, FinalHeight, true, BoughtCP, AllCoins, FinalTime)
+        if (not BoughtCP?):
+            Daily.ReportProgress(Player, challenge_kind.PureClear, 1)
+        Daily.ReportProgress(Player, challenge_kind.SpeedClear, FinalTime)
+
         if (GameState < 2):
             set GameState = 2
         Sleep(2.0)

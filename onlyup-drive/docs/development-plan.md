@@ -26,8 +26,10 @@ Temps estimat total: **5–8 setmanes** a ritme regular.
 - [x] `docs/visual-design.md`
 - [x] `docs/build-layout.md` (plànol amb coordenades)
 - [x] `docs/development-plan.md`
+- [x] `docs/economy.md` (fitxes + KM)
+- [x] `docs/retention.md` (retenció i rejugabilitat)
 - [x] `docs/publishing.md` (noms, tags, miniatura)
-- [x] `verse/*` (esquelets: GameManager, HeightTracker, CoinManager, CheckpointManager, FallResetManager, TimerDisplay, LeaderboardManager)
+- [x] `verse/*` (esquelets: GameManager, HeightTracker, CoinManager, CheckpointManager, ConsumableShop, MetaProgress, DailyChallengeManager, FallResetManager, TimerDisplay, LeaderboardManager)
 
 ---
 
@@ -133,19 +135,35 @@ Mapa que dona ganes de gravar.
 
 ---
 
-## FASE 6 — Economia i checkpoints (Verse + balanceig)
+## FASE 6 — Economia, retenció i rejugabilitat (Verse + balanceig)
 
 ### Objectiu
-La capa d'accessibilitat opcional.
+La capa que converteix "una escalada" en "torno cada dia". Detall a `economy.md` i `retention.md`.
 
-- [ ] `CoinManager.verse` — ~63 monedes repartides (5/10/12/14/12/10/0).
-- [ ] `CheckpointManager.verse` — 5 estacions comprables (cost 15).
-- [ ] Botiga de checkpoint a cada estació (botó + rètol + feedback).
-- [ ] Toggle "mode pur" (desactivar compra) per als hardcore.
-- [ ] Balanceig: qui agafa totes les monedes pot comprar 3–4 checkpoints.
+**Economia de partida (FITXES ⚡):**
+- [ ] `CoinManager.verse` — 63 monedes tipades (estàndard/risc/mòbil/secreta).
+- [ ] Ratxa "sense caure" amb multiplicador (x1 → x2) + bonus d'entrada de secció.
+- [ ] `CheckpointManager.verse` — 5 checkpoints amb preu escalat (10/15/20/30/45).
+- [ ] `ConsumableShop.verse` — 4 potenciadors d'un sol ús (nitro/hover/imant/rebobinar).
+- [ ] Toggle "mode pur" (sense checkpoints) per als hardcore.
+
+**Meta-progressió persistent (KM 🏁) — MVP de retenció:**
+- [ ] `MetaProgress.verse` — càlcul de KM en acabar + saldo persistent.
+- [ ] Botiga del hub (rastres de neó, skin del cotxe-trofeu, emotes).
+- [ ] Accolades: primer clear, clear pur, totes les monedes, rècords.
+
+**Retorn recurrent (post-llançament, per updates):**
+- [ ] `DailyChallengeManager.verse` — 3 reptes rotatius (+KM).
+- [ ] Modificadors setmanals (Hora Punta, Boira, Torn de Nit, Grav. Baixa, Contrarellotge).
+- [ ] Leaderboards múltiples (alçada / temps / fitxes / ratxa / clears purs).
+- [ ] Login streak + esdeveniments de temporada.
+
+### Balanceig
+- [ ] Recollir gairebé tot ≈ comprar tots els checkpoints (120 ⚡) O potenciadors.
+- [ ] Cap perk de KM trenca el repte (només marges petits + cosmètics).
 
 ### Lliurable
-Doble públic servit: casual (checkpoints) i hardcore (net).
+Doble públic servit (casual/hardcore) + raons per tornar (diari, setmanal, cosmètics).
 
 ---
 
