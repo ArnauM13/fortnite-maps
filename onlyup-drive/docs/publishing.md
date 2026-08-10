@@ -66,9 +66,10 @@ La miniatura és el 80% dels clics a Discover. Ha de llegir-se **a mida petita**
 Composició **vertical amb sensació d'alçada**:
 
 - **Fons:** cel outrun en gradient (magenta a dalt → rosa → taronja) amb un **sol gegant amb franges** baix a l'horitzó i una **graella de neó** que s'esvaeix.
-- **Element central:** una **torre d'autopista** que puja en diagonal cap al sol — cotxes apilats, un pont i tanques de neó — vista en contrapicat (des de baix mirant amunt) per exagerar l'alçada.
+- **Element central:** una **torre de cotxes apilats** que puja en diagonal cap al sol — cotxes amb rodes insinuades, un pont i tanques de neó — vista en contrapicat (des de baix mirant amunt) per exagerar l'alçada.
+- **Primer pla (capa tuner):** una **quedada de cotxes tuning** a baix amb **underglow de neó** (pòsits de llum rosa/cian sota els cotxes) i fum de drift insinuat → deixa clar que és un mapa de cotxes i captura la tendència del car meet.
 - **Personatge (opcional):** una silueta petita d'un jugador de Fortnite dalt de tot, saltant, retallada contra el sol → dona escala i "objectiu".
-- **Neó d'accent:** vores i rails en **cian** i **rosa magenta** brillants (bloom).
+- **Neó d'accent:** vores i rails en **cian** i **rosa magenta** brillants (bloom), underglow sota els cotxes.
 - **Text:** "**ONLY UP**" gran a dalt i "**DRIVE**" enorme a baix, tipografia retro/chrome anys 80, amb contorn de neó. Poc text, molt gran, llegible en miniatura.
 - **Cantonada:** una fletxa amunt ↑ de neó o un icona 🚗, com a segell.
 

@@ -18,6 +18,14 @@
       <stop offset="55%" stop-color="#0a2a6a"/>
       <stop offset="100%" stop-color="#00e5ff"/>
     </linearGradient>
+    <radialGradient id="glowpink" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff2d95" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#ff2d95" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowcyan" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#00e5ff" stop-opacity="0"/>
+    </radialGradient>
     <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
       <feGaussianBlur stdDeviation="10" result="b"/>
       <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
@@ -32,48 +40,46 @@
   <rect width="1920" height="1080" fill="url(#sky)"/>
 
   <!-- Sol amb franges -->
-  <g filter="url(#glowbig)">
-    <circle cx="960" cy="640" r="360" fill="url(#sun)"/>
-  </g>
+  <g filter="url(#glowbig)"><circle cx="960" cy="600" r="340" fill="url(#sun)"/></g>
   <g fill="#1b0730">
-    <rect x="560" y="640" width="800" height="18"/>
-    <rect x="560" y="686" width="800" height="24"/>
-    <rect x="560" y="742" width="800" height="32"/>
-    <rect x="560" y="808" width="800" height="44"/>
-    <rect x="560" y="884" width="800" height="60"/>
+    <rect x="580" y="600" width="760" height="16"/>
+    <rect x="580" y="642" width="760" height="22"/>
+    <rect x="580" y="694" width="760" height="30"/>
+    <rect x="580" y="756" width="760" height="42"/>
   </g>
 
   <!-- Graella de neó a l'horitzó -->
-  <g stroke="#00e5ff" stroke-width="2" opacity="0.55" filter="url(#glow)">
-    <line x1="0" y1="900" x2="1920" y2="900"/>
-    <line x1="0" y1="948" x2="1920" y2="948"/>
-    <line x1="0" y1="1006" x2="1920" y2="1006"/>
-    <line x1="0" y1="1074" x2="1920" y2="1074"/>
-    <line x1="960" y1="900" x2="960" y2="1080"/>
-    <line x1="960" y1="900" x2="360" y2="1080"/>
-    <line x1="960" y1="900" x2="1560" y2="1080"/>
-    <line x1="960" y1="900" x2="-260" y2="1080"/>
-    <line x1="960" y1="900" x2="2180" y2="1080"/>
-    <line x1="960" y1="900" x2="60" y2="1080"/>
-    <line x1="960" y1="900" x2="1860" y2="1080"/>
+  <g stroke="#00e5ff" stroke-width="2" opacity="0.5" filter="url(#glow)">
+    <line x1="0" y1="820" x2="1920" y2="820"/>
+    <line x1="0" y1="864" x2="1920" y2="864"/>
+    <line x1="0" y1="920" x2="1920" y2="920"/>
+    <line x1="960" y1="820" x2="360" y2="1080"/>
+    <line x1="960" y1="820" x2="1560" y2="1080"/>
+    <line x1="960" y1="820" x2="-100" y2="1080"/>
+    <line x1="960" y1="820" x2="2020" y2="1080"/>
+    <line x1="960" y1="820" x2="620" y2="1080"/>
+    <line x1="960" y1="820" x2="1300" y2="1080"/>
   </g>
 
-  <!-- Torre d'autopista en contrapicat (diagonal cap al sol) -->
+  <!-- Torre de cotxes apilats en contrapicat -->
   <g>
-    <!-- pila de "cotxes"/plataformes ascendint -->
     <g stroke="#ff2d95" stroke-width="4" filter="url(#glow)">
-      <rect x="720" y="900" width="300" height="70" rx="10" fill="#141026"/>
-      <rect x="770" y="812" width="300" height="66" rx="10" fill="#171233"/>
-      <rect x="700" y="726" width="290" height="60" rx="10" fill="#141026"/>
-      <rect x="800" y="642" width="280" height="56" rx="10" fill="#171233"/>
-      <rect x="720" y="560" width="270" height="52" rx="10" fill="#141026"/>
-      <rect x="820" y="482" width="250" height="48" rx="10" fill="#171233"/>
-      <rect x="740" y="408" width="240" height="44" rx="10" fill="#141026"/>
-      <rect x="836" y="340" width="220" height="40" rx="10" fill="#171233"/>
+      <rect x="770" y="812" width="300" height="66" rx="12" fill="#171233"/>
+      <rect x="700" y="726" width="290" height="60" rx="12" fill="#141026"/>
+      <rect x="800" y="642" width="280" height="56" rx="12" fill="#171233"/>
+      <rect x="720" y="560" width="270" height="52" rx="12" fill="#141026"/>
+      <rect x="820" y="482" width="250" height="48" rx="12" fill="#171233"/>
+      <rect x="740" y="408" width="240" height="44" rx="12" fill="#141026"/>
+      <rect x="836" y="340" width="220" height="40" rx="12" fill="#171233"/>
+    </g>
+    <!-- rodes insinuades a alguns "cotxes" -->
+    <g fill="#0a0418">
+      <circle cx="800" cy="880" r="16"/><circle cx="1040" cy="880" r="16"/>
+      <circle cx="730" cy="788" r="14"/><circle cx="960" cy="788" r="14"/>
+      <circle cx="830" cy="700" r="13"/><circle cx="1050" cy="700" r="13"/>
     </g>
     <!-- vores cian (camí) -->
     <g stroke="#00e5ff" stroke-width="5" filter="url(#glow)">
-      <line x1="720" y1="900" x2="1020" y2="900"/>
       <line x1="770" y1="812" x2="1070" y2="812"/>
       <line x1="700" y1="726" x2="990" y2="726"/>
       <line x1="800" y1="642" x2="1080" y2="642"/>
@@ -84,7 +90,7 @@
     </g>
   </g>
 
-  <!-- Silueta del jugador saltant dalt de tot, retallada contra el sol -->
+  <!-- Silueta del jugador saltant dalt de tot -->
   <g fill="#0a0418" filter="url(#glow)">
     <circle cx="946" cy="300" r="16"/>
     <rect x="936" y="316" width="20" height="34" rx="6"/>
@@ -94,17 +100,43 @@
     <rect x="948" y="348" width="10" height="22" rx="4" transform="rotate(20 953 359)"/>
   </g>
 
+  <!-- ===== QUEDADA TUNER a primer pla amb underglow ===== -->
+  <!-- pòsits d'underglow de neó -->
+  <ellipse cx="270" cy="1010" rx="230" ry="46" fill="url(#glowpink)"/>
+  <ellipse cx="620" cy="1035" rx="230" ry="46" fill="url(#glowcyan)"/>
+  <ellipse cx="1330" cy="1035" rx="240" ry="48" fill="url(#glowpink)"/>
+  <ellipse cx="1680" cy="1010" rx="220" ry="44" fill="url(#glowcyan)"/>
+
+  <!-- cotxe tuner esquerra -->
+  <g>
+    <path d="M120 990 q40 -70 130 -74 l150 0 q70 4 110 70 l40 4 q20 4 20 24 l0 20 -560 0 0 -20 q0 -18 20 -22 z" fill="#120a22" stroke="#ff2d95" stroke-width="4" filter="url(#glow)"/>
+    <path d="M250 918 l150 0 q50 2 80 44 l-330 0 q30 -42 100 -44 z" fill="#1a1030" stroke="#00e5ff" stroke-width="3"/>
+    <circle cx="205" cy="1000" r="34" fill="#05010f" stroke="#00e5ff" stroke-width="4"/>
+    <circle cx="440" cy="1000" r="34" fill="#05010f" stroke="#00e5ff" stroke-width="4"/>
+  </g>
+  <!-- cotxe tuner dreta -->
+  <g>
+    <path d="M1360 990 q40 -70 130 -74 l150 0 q70 4 110 70 l40 4 q20 4 20 24 l0 20 -560 0 0 -20 q0 -18 20 -22 z" fill="#120a22" stroke="#00e5ff" stroke-width="4" filter="url(#glow)"/>
+    <path d="M1490 918 l150 0 q50 2 80 44 l-330 0 q30 -42 100 -44 z" fill="#1a1030" stroke="#ff2d95" stroke-width="3"/>
+    <circle cx="1445" cy="1000" r="34" fill="#05010f" stroke="#ff2d95" stroke-width="4"/>
+    <circle cx="1680" cy="1000" r="34" fill="#05010f" stroke="#ff2d95" stroke-width="4"/>
+  </g>
+  <!-- fum de drift insinuat -->
+  <g fill="#ffffff" opacity="0.06">
+    <circle cx="520" cy="960" r="60"/><circle cx="580" cy="930" r="48"/>
+    <circle cx="1400" cy="955" r="60"/><circle cx="1340" cy="925" r="44"/>
+  </g>
+
   <!-- Text -->
   <g text-anchor="middle" filter="url(#glow)">
     <text x="960" y="150" font-size="120" letter-spacing="14" fill="url(#chrome)" stroke="#00e5ff" stroke-width="2">ONLY UP</text>
   </g>
   <g text-anchor="middle" filter="url(#glowbig)">
-    <text x="960" y="1030" font-size="300" letter-spacing="18" fill="url(#chrome)" stroke="#ff2d95" stroke-width="4" font-style="italic">DRIVE</text>
+    <text x="960" y="1005" font-size="280" letter-spacing="18" fill="url(#chrome)" stroke="#ff2d95" stroke-width="4" font-style="italic">DRIVE</text>
   </g>
 
   <!-- Segell cantonada -->
   <g filter="url(#glow)">
     <text x="1850" y="120" text-anchor="end" font-size="90" fill="#00e5ff">↑</text>
-    <text x="90" y="1010" font-size="70">🚗</text>
   </g>
 </svg>
