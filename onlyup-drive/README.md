@@ -63,6 +63,7 @@ Per no ser tan brutal com un Only Up pur (i seguir la tendència actual d'access
 ```
 onlyup-drive/
 ├── README.md                     ← aquest fitxer
+├── build-playbook.html           ← ★ MANUAL INTERACTIU (obre'l al navegador; checklist amb progrés)
 ├── docs/
 │   ├── design.md                 ← document de disseny (premissa, loop, paràmetres)
 │   ├── zones.md                  ← disseny detallat de les 7 seccions
