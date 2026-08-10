@@ -1,5 +1,7 @@
 # ONLY UP: DRIVE — Disseny de Seccions
 
+> 🚗 **Vehicles:** cada secció està poblada de vehicles (plataformes, decoració de quedada, gimmicks i conduïbles). El desglossament per secció i rols és a `vehicles-and-theme.md`.
+
 > 7 seccions verticals. Cada una introdueix UNA mecànica nova i té un tram pla al final ("estació") on respirar i, opcionalment, comprar checkpoint.
 > Regla d'or Only Up: després de cada tram dur ha d'haver-hi un lloc on aterrar si falles poc, per no enviar sempre el jugador a zero.
 

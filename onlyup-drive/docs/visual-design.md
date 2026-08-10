@@ -19,6 +19,18 @@ L'estil és el que fa que el mapa es gravi sol. No és negociable, és el segell
 
 ---
 
+## Capa temàtica: STREET TAKEOVER (tuner meet)
+
+Sobre l'outrun s'hi suma una **quedada de cotxes tuning nocturna** (JDM, underglow, drift, nitro) — molt de tendència ara i molt clipejable. És **attrezzo i so**, no toca el codi de color de joc. Detall a `vehicles-and-theme.md`.
+
+- **Underglow** de neó (rosa/cian) sota els cotxes → llum ambient gratis i coherent.
+- **Fum de drift** (partícules) a les estacions; **flama de nitro** als pads.
+- **Vinils/decals JDM**, matrícules amb guinys, banderes de meeting.
+- **Llums de policia** (blau/vermell) parpellejant al fons — moviment i tensió.
+- **So:** motors revolucionant, clàxons, sirenes llunyanes.
+
+---
+
 ## Sistema de color global (codi de lectura)
 
 Aquest codi es manté a TOTES les seccions. Canvia l'attrezzo, no el significat.

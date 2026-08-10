@@ -405,6 +405,27 @@
       <li><span class="h">Música + ambient.</span> <span class="d"><kbd>Reproductor</kbd>/<kbd>Sonido ambiental</kbd> amb synthwave; puja d'intensitat amb l'alçada. Silenci al túnel (S5) i abans del drop final (S7).</span></li>
     </ol>
     <div class="note" style="border-color:#9b59b6; background:color-mix(in srgb, #9b59b6 12%, transparent); color:inherit"><b>Regla d'or:</b> el camí correcte sempre més il·luminat que la decoració. Si dubtes on anar, és que falta contrast.</div>
+
+    <h3 class="mini">6 · Molts vehicles + capa "Street Takeover"</h3>
+    <p class="sub" style="margin-bottom:8px">Poblar la torre de vehicles (quedada tuning nocturna). Objectiu ~120–140 props de vehicle + ~8 conduïbles. Detall i rols a <code class="path">docs/vehicles-and-theme.md</code> i <code class="path">build-layout.md §14</code>.</p>
+    <ol class="steps">
+      <li><span class="h">Decoració de quedada.</span> <span class="d">Fileres de tuners aparcats a cada estació amb <b>underglow</b> de neó (rosa/cian), <b>fum de drift</b> (partícules) i llums de <b>policia</b> parpellejant al fons. NO trepitjables (posa'ls fora del camí).</span></li>
+      <li><span class="h">Vehicles-plataforma.</span> <span class="d">L'Embús (S2) apila ~30 cotxes com a plataformes fixes; S3/S6 cotxes mòbils, tow-truck ascensor, monster truck i semis amb <kbd>Movedor de objetos</kbd> (prop_mover); S5 formigonera girant.</span></li>
+      <li><span class="h">Reskin tuner dels impulsos.</span> <span class="d">Nitro pad = tub d'escapament amb flama; zona nitro = fum de drift; grind rail = derrapada amb espurnes; moll = roda de tuning.</span></li>
+      <li><span class="h">Conduïbles.</span> <span class="d">Col·loca <kbd>Generador de vehículos</kbd> (vehicle_spawner) al meet de l'spawn (esportiu + pickup + moto), al cim (muscle car trofeu) i el joyride secret. Col·loca <b>vehicle_manager</b> i cabla:</span></li>
+    </ol>
+    <div class="wire-grid">
+      <div class="card">
+        <div class="ch"><span class="name">vehicle_manager</span><span class="kind" style="background:#9b59b6">tema</span></div>
+        <div class="rows">
+          <div class="row"><input type="checkbox"><label><span class="f">SpawnVehicles[]</span><span class="arrow">→</span><span class="to">vehicle_spawner del meet</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">SummitVehicle</span><span class="arrow">→</span><span class="to">muscle car del cim</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">SummitTrigger</span><span class="arrow">→</span><span class="to">Activador «FINISH»</span></label></div>
+          <div class="row"><input type="checkbox"><label><span class="f">JoyrideVehicle + JoyrideTrigger</span><span class="arrow">→</span><span class="to">vehicle + trigger secret</span></label></div>
+        </div>
+      </div>
+    </div>
+    <div class="note"><b>Rendiment:</b> Nanite als props i LOD agressiu als vehicles decoratius llunyans. Els conduïbles, pocs (~8). Amb això "molts vehicles" no mata els FPS.</div>
   </section>
 
   <!-- ============ FASE 4 ============ -->

@@ -4,7 +4,7 @@
 
 ## Concepte
 
-**Only Up** vertical (el gènere de "grimpar una torre de props fins al cel") fusionat amb una temàtica **automobilística / autopista** i una estètica **synthwave / outrun de posta de sol**. El jugador escala una torre surrealista feta de cotxes apilats, ponts d'autopista, tanques quilòmetriques, autocinemes flotants i senyals de neó, tot ascendint cap a un sol que no es pon mai.
+**Only Up** vertical (el gènere de "grimpar una torre de props fins al cel") fusionat amb una temàtica **automobilística / autopista** i una estètica **synthwave / outrun de posta de sol**, amb una capa temàtica actual de **"Street Takeover"** (quedada de cotxes tuning nocturna: JDM, underglow de neó, drift, nitro). El jugador escala una torre surrealista **feta de vehicles** — cotxes apilats, busos, tràilers, grues, monster trucks — ponts d'autopista, autocinemes flotants i senyals de neó, tot ascendint cap a un sol que no es pon mai. Hi ha **vehicles conduïbles** a l'spawn i al cim.
 
 El motor de retenció és el mateix que ha fet virals els Only Up: **la caiguda**. No hi ha dany de caiguda — hi ha **pèrdua de progrés**. Un error et fa lliscar torre avall i has de tornar a pujar. Això genera el bucle "una més i ho tinc" que la gent grava i comparteix.
 
@@ -51,6 +51,8 @@ Per no ser tan brutal com un Only Up pur (i seguir la tendència actual d'access
 - [x] Potenciadors d'un sol ús (nitro, hover, imant, rebobinar)
 - [x] Ratxa "sense caure" amb multiplicador de fitxes
 - [x] Reptes diaris + modificadors setmanals + meta-progressió (cosmètics)
+- [x] **Molts vehicles**: plataformes mòbils/fixes, decoració de quedada i conduïbles
+- [x] Capa temàtica **Street Takeover** (tuner meet nocturn, underglow, nitro, drift)
 - [x] Nitro pads (jump/boost) i molls (tires) com a impuls
 - [x] Grind rails (tanques de seguretat) per velocitat
 - [x] Cotxes mòbils com a plataformes amb timing
@@ -72,6 +74,7 @@ onlyup-drive/
 │   ├── development-plan.md       ← pla per fases
 │   ├── economy.md                ← ★ economia de fitxes + KM (fonts, sortides, balanceig)
 │   ├── retention.md              ← ★ sistemes de retenció i rejugabilitat
+│   ├── vehicles-and-theme.md     ← ★ capa Street Takeover + catàleg i rols de vehicles
 │   ├── publishing.md             ← noms, tipologia/tags i concepte de miniatura
 │   └── thumbnail-concept.svg     ← maqueta visual de la miniatura (outrun)
 └── verse/                        ← scripts Verse (esquelet, es compilen a UEFN)
@@ -83,6 +86,7 @@ onlyup-drive/
     ├── MetaProgress.verse           ← KM persistents + botiga del hub
     ├── DailyChallengeManager.verse  ← reptes diaris rotatius
     ├── FallResetManager.verse       ← reset en caure al buit del fons
+    ├── VehicleManager.verse         ← vehicles conduïbles (spawn, cim, joyride)
     ├── TimerDisplay.verse           ← timer en pantalla
     └── LeaderboardManager.verse     ← rècords (alçada / temps / fitxes...)
 ```

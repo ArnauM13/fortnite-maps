@@ -280,7 +280,44 @@ L'efecte real de cada potenciador es cabla amb el dispositiu corresponent (jump 
 
 ---
 
-## 12. Post-process i ambient (l'estètica outrun)
+## 14. Vehicles (capa "Street Takeover")
+
+> Molts vehicles, però cada un amb rol clar (veure `vehicles-and-theme.md`). Objectiu: ~120–140 props de vehicle (majoria decoració apilada) + ~8 conduïbles. Nanite + LOD agressiu als llunyans.
+
+### Conduïbles (`vehicle_spawner_device`)
+
+| On | Z | Vehicles | Cablejat |
+|----|---|----------|----------|
+| Meet a spawn | 20 | esportiu + pickup + moto | `VehicleManager.SpawnVehicles[]` |
+| Cim (trofeu) | 4380 | muscle car | `VehicleManager.SummitVehicle` |
+| Joyride secret | ~2400 (amagat) | quad/off-road | `VehicleManager.JoyrideVehicle` + `JoyrideTrigger` |
+
+### Vehicles-plataforma i decoració (props + `prop_mover`)
+
+| Secció | Props vehicle aprox. | Tipus | Rol |
+|--------|----------------------|-------|-----|
+| 1 Estació | 8 | tuners aparcats | decoració underglow |
+| 2 L'Embús | ~30 | sedans/taxis/furgonetes/bus/camió | plataformes fixes |
+| 3 Els Ponts | ~15 | cotxes mòbils + tow-truck ascensor + food truck | mòbils + gimmick |
+| 4 Autocinema | ~20 | cotxes "mirant pantalla" + bus-marc | decoració + plataforma |
+| 5 Túnel | ~10 | formigonera girant + cotxes encaixats | rotatori + fix |
+| 6 El Nus | ~12 | monster truck + cotxe-lurch + semis | gimmick + plataforma |
+| 7 Cim | ~10 | police cars amb llums | decoració (celebració) |
+
+### Cablejat a `VehicleManager.verse`
+
+| `@editable` | Assigna |
+|-------------|---------|
+| `SpawnVehicles[]` | vehicle_spawner del meet de l'spawn |
+| `SummitVehicle` | vehicle_spawner del muscle car del cim |
+| `SummitTrigger` | el trigger "FINISH" (o un de dedicat al cim) |
+| `JoyrideVehicle` + `JoyrideTrigger` | vehicle + trigger del joyride secret |
+
+> Els vehicles-plataforma mòbils es mouen amb `prop_mover` (com els cotxes de §4/§6), NO amb aquest script.
+
+---
+
+## 12. Post-process i ambient (l'estètica outrun + tuner)
 
 - `post_process_device`: bloom alt, saturació +, grain lleuger, tint magenta/taronja. **Imprescindible.**
 - Skybox/skydome: gradient de posta + sol gegant amb franges + grid a l'horitzó.
